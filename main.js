@@ -388,7 +388,7 @@ function getNameById(id) {
 // ===============================
 // ポップアップ閉じる
 // ===============================
-document.getElementById("popup-close").onclick = () => {
+document.getElementById("popup").onclick = () => {
   document.getElementById("popup").style.display = "none";
   popupActive = false;
 
@@ -396,6 +396,8 @@ document.getElementById("popup-close").onclick = () => {
     showNextPopup();
   }
 };
+
+
 
 // ===============================
 // 次の時代へ
