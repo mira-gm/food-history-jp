@@ -5,7 +5,7 @@
 // ---- 時代一覧 ----
 const eras = [
   "縄文","弥生","古墳・奈良","平安・鎌倉",
-  "室町・安土桃山","江戸","明治・大正","昭和・平成"
+  "室町・戦国","江戸","明治・大正","昭和・平成"
 ];
 
 let currentEraIndex = 0;
@@ -138,7 +138,7 @@ function renderHome(){
     "弥生": "./data/02yayoi.png",
     "古墳・奈良": "./data/03kofunnara.png",
     "平安・鎌倉": "./data/04heiankamakura.png",
-    "室町・安土桃山": "./data/05muromachiadutimomoyama.png",
+    "室町・安土桃山": "./data/05muromachisengoku.png",
     "江戸": "./data/06edo.png",
     "明治・大正": "./data/07meijitaisyo.png",
     "昭和・平成": "./data/08syowaheisei.png"
