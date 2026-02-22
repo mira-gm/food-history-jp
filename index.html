@@ -112,7 +112,7 @@ body {
   margin-bottom: 10px;
 }
 
-#zukan-info-box div {
+.zukan-item {
   padding: 12px;
   border-bottom: 1px solid #555;
   background: #222;
@@ -123,11 +123,16 @@ body {
   align-items: center;
 }
 
-/* 押せる感（右に矢印） */
-#zukan-info-box div::after {
+/* 料理だけ矢印を付ける */
+.zukan-item.cookable::after {
   content: "›";
   font-size: 20px;
   color: #888;
+}
+
+/* 素材・技術・道具は押せない見た目 */
+.zukan-item.disabled {
+  opacity: 0.6;
 }
 
 /* 分類タブ（中央） */
@@ -295,15 +300,15 @@ body {
   <div id="zukan-info-box"></div>
 
   <div id="zukan-tabs">
-    <div class="info-tab active" data-type="素材">素材</div>
+    <div class="info-tab active" data-type="料理">料理</div>
+    <div class="info-tab" data-type="素材">素材</div>
     <div class="info-tab" data-type="技術">技術</div>
     <div class="info-tab" data-type="道具">道具</div>
-    <div class="info-tab" data-type="料理">料理</div>
   </div>
 
   <div id="era-tabs"></div>
 
-  <button id="btn-go-home" class="home-big-btn">ホームへ戻る</button>
+  <button id="btn-zukan-home" class="home-big-btn">ホームへ戻る</button>
 </div>
 
 <!-- ============================

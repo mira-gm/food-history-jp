@@ -25,7 +25,7 @@ let popupActive = false;
 
 let currentEraIndex = 0;
 let viewEra = null;
-let zukanTab = "素材";
+let zukanTab = "料理"; // ★ 図鑑の初期タブを料理に変更
 
 // ===============================
 // CSV 読み込み
@@ -111,7 +111,6 @@ function applyUIText() {
   document.getElementById("btn-tool").textContent = uiText["btn_tool"];
   document.getElementById("btn-cook").textContent = uiText["btn_cook"];
   document.getElementById("btn-go-zukan").textContent = uiText["btn_zukan"];
-  document.getElementById("btn-go-home").textContent = uiText["btn_home"];
   document.getElementById("btn-next-era").textContent = uiText["btn_next"];
 }
 
@@ -196,7 +195,7 @@ function renderHome(){
     "弥生": "./data/02yayoi.png",
     "古墳・奈良": "./data/03kofunnara.png",
     "平安・鎌倉": "./data/04heiankamakura.png",
-    "室町戦国": "./data/05muromachisengoku.png",
+    "室町戦国": "./data/05muromachiadutimomoyama.png",
     "江戸": "./data/06edo.png",
     "明治・大正": "./data/07meijitaisyo.png",
     "昭和・平成": "./data/08syowaheisei.png"
@@ -244,19 +243,18 @@ function renderZukan(){
   const box = document.getElementById("zukan-info-box");
   box.innerHTML = "";
 
+  // ★ 料理タブ（押せる）
   if (zukanTab === "料理") {
     const eraRecipes = recipes.filter(r => r.時代 === eraName);
     eraRecipes.forEach(r => {
       const opened = completed.has(r.料理);
       const div = document.createElement("div");
 
+      div.className = "zukan-item" + (opened ? " cookable" : " disabled");
       div.textContent = opened ? r.料理 : "？？？";
 
       if (opened) {
-        div.style.cursor = "pointer";
-        div.onclick = () => {
-          showPopupForRecipe(r);
-        };
+        div.onclick = () => showPopupForRecipe(r);
       }
 
       box.appendChild(div);
@@ -264,13 +262,17 @@ function renderZukan(){
     return;
   }
 
+  // ★ 素材・技術・道具（押せない）
   const eraItems = dataList.filter(d => d.分類 === zukanTab && d.時代 === eraName);
   const ownedSet = owned[zukanTab];
 
   eraItems.forEach(d => {
     const opened = ownedSet.has(d.id);
     const div = document.createElement("div");
+
+    div.className = "zukan-item disabled";
     div.textContent = opened ? d.name : "？？？";
+
     box.appendChild(div);
   });
 }
@@ -396,7 +398,7 @@ document.getElementById("btn-cook").onclick = () => {
 
 // ===============================
 // ポップアップ（キュー処理）
-// ===============================
+===============================
 function showNextPopup() {
   if (popupActive) return;
   if (popupQueue.length === 0) return;
@@ -496,16 +498,9 @@ document.getElementById("era-popup").onclick = () => {
 };
 
 // ===============================
-// 画面切り替え
+// 図鑑 → ホームへ戻る
 // ===============================
-document.getElementById("btn-go-zukan").onclick = () => {
-  document.getElementById("home-screen").classList.add("hidden");
-  document.getElementById("zukan-screen").classList.remove("hidden");
-  buildEraTabs();
-  renderZukan();
-};
-
-document.getElementById("btn-go-home").onclick = () => {
+document.getElementById("btn-zukan-home").onclick = () => {
   document.getElementById("zukan-screen").classList.add("hidden");
   document.getElementById("home-screen").classList.remove("hidden");
 };
