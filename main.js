@@ -1,52 +1,36 @@
 // ===============================
-// 多言語対応：設定
+// 日本語専用：UIテキスト
 // ===============================
-let lang = "jp"; // "en" にすると英語版になる
-
 let uiText = {};
 let msgText = {};
-let eraText = [];
+let eraList = [];
 
 // ===============================
-// パート2：ゲームロジック（ID判定版 + ポップアップ + 図鑑クリック対応）
+// 所持データ
 // ===============================
-
-// 所持データ（IDで管理）
 const owned = {
   素材: new Set(),
   技術: new Set(),
   道具: new Set()
 };
 
-// 完成した料理（料理名で管理）
 const completed = new Set();
 
-// CSVデータ
-let dataList = [];   // 素材・技術・道具（ID付き）
-let recipes = [];    // 料理（ID付き）
-let gazoMap = {};    // 料理名 → 画像ファイル名
+let dataList = [];
+let recipes = [];
+let gazoMap = {};
 
-// ポップアップキュー
 let popupQueue = [];
 let popupActive = false;
 
-// ===============================
-// 言語テキスト取得
-// ===============================
-function t(map, key) {
-  return map[key]?.[lang] ?? key;
-}
-
-// eraText は配列なので専用
-function eraNameByIndex(i) {
-  return eraText[i]?.[lang] ?? "???";
-}
+let currentEraIndex = 0;
+let viewEra = null;
+let zukanTab = "素材";
 
 // ===============================
 // CSV 読み込み
 // ===============================
 async function loadCSV() {
-  // --- ゲームデータ ---
   const sozaiText = await fetch("./data/sozai.csv").then(r => r.text());
   const ryouriText = await fetch("./data/ryouri.csv").then(r => r.text());
   const gazoText = await fetch("./data/gazo.csv").then(r => r.text());
@@ -58,14 +42,10 @@ async function loadCSV() {
     gazoMap[row["料理名"]] = row["画像ファイル名"];
   });
 
-  // --- 多言語 CSV ---
-  const uiCSV = await fetch("./data/ui.csv").then(r => r.text());
-  const msgCSV = await fetch("./data/message.csv").then(r => r.text());
-  const eraCSV = await fetch("./data/era.csv").then(r => r.text());
-
-  uiText = parseLangCSV(uiCSV);
-  msgText = parseLangCSV(msgCSV);
-  eraText = parseLangCSV_Array(eraCSV);
+  // 日本語 UI
+  uiText = parseKeyValueCSV(await fetch("./data/ui.csv").then(r => r.text()));
+  msgText = parseKeyValueCSV(await fetch("./data/message.csv").then(r => r.text()));
+  eraList = parseKeyValueCSV_Array(await fetch("./data/era.csv").then(r => r.text()));
 
   applyUIText();
   renderHome();
@@ -74,7 +54,7 @@ async function loadCSV() {
 }
 
 // ===============================
-// CSV パーサー（通常）
+// CSV パーサー
 // ===============================
 function parseCSV(text){
   const lines = text.trim().split(/\r?\n/);
@@ -88,39 +68,23 @@ function parseCSV(text){
   });
 }
 
-// ===============================
-// CSV パーサー（多言語：key,jp,en）
-// ===============================
-function parseLangCSV(text){
+// key,text 用
+function parseKeyValueCSV(text){
   const lines = text.trim().split(/\r?\n/);
-  const header = lines[0].split(",");
-
   const map = {};
   lines.slice(1).forEach(line => {
-    const cols = line.split(",");
-    const key = cols[0];
-    map[key] = {
-      jp: cols[1],
-      en: cols[2]
-    };
+    const [key, text] = line.split(",");
+    map[key] = text;
   });
   return map;
 }
 
-// ===============================
-// CSV パーサー（時代名：id,jp,en）
-// ===============================
-function parseLangCSV_Array(text){
+// id,text 用
+function parseKeyValueCSV_Array(text){
   const lines = text.trim().split(/\r?\n/);
-  const header = lines[0].split(",");
-
   return lines.slice(1).map(line => {
-    const cols = line.split(",");
-    return {
-      id: cols[0],
-      jp: cols[1],
-      en: cols[2]
-    };
+    const [id, text] = line.split(",");
+    return { id, text };
   });
 }
 
@@ -128,19 +92,20 @@ function parseLangCSV_Array(text){
 // UI テキスト適用
 // ===============================
 function applyUIText() {
-  document.getElementById("btn-material").textContent = t(uiText, "btn_material");
-  document.getElementById("btn-tech").textContent = t(uiText, "btn_tech");
-  document.getElementById("btn-tool").textContent = t(uiText, "btn_tool");
-  document.getElementById("btn-cook").textContent = t(uiText, "btn_cook");
-  document.getElementById("btn-go-zukan").textContent = t(uiText, "btn_zukan");
-  document.getElementById("btn-go-home").textContent = t(uiText, "btn_home");
-  document.getElementById("btn-next-era").textContent = t(uiText, "btn_next");
+  document.getElementById("btn-material").textContent = uiText["btn_material"];
+  document.getElementById("btn-tech").textContent = uiText["btn_tech"];
+  document.getElementById("btn-tool").textContent = uiText["btn_tool"];
+  document.getElementById("btn-cook").textContent = uiText["btn_cook"];
+  document.getElementById("btn-go-zukan").textContent = uiText["btn_zukan"];
+  document.getElementById("btn-go-home").textContent = uiText["btn_home"];
+  document.getElementById("btn-next-era").textContent = uiText["btn_next"];
+}
 
-  // 図鑑タブ
-  document.querySelector('[data-type="素材"]').textContent = t(uiText, "zukan_tab_material");
-  document.querySelector('[data-type="技術"]').textContent = t(uiText, "zukan_tab_tech");
-  document.querySelector('[data-type="道具"]').textContent = t(uiText, "zukan_tab_tool");
-  document.querySelector('[data-type="料理"]').textContent = t(uiText, "zukan_tab_recipe");
+// ===============================
+// 時代名
+// ===============================
+function eraNameByIndex(i) {
+  return eraList[i]?.text ?? "？？？";
 }
 
 // ===============================
@@ -152,7 +117,7 @@ function log(msg){
 }
 
 // ===============================
-// 空欄は条件なしとして扱う
+// 必要ID
 // ===============================
 function needID(str) {
   if (!str) return [];
@@ -208,7 +173,7 @@ function canCookAnyRecipe(){
 function renderHome(){
   const eraName = eraNameByIndex(currentEraIndex);
   document.getElementById("era").textContent =
-    t(uiText, "era_label") + eraName;
+    uiText["era_label"] + eraName;
 
   const imageMap = {
     "縄文": "./data/01jomon.png",
@@ -238,15 +203,15 @@ function buildEraTabs(){
   const tabs = document.getElementById("era-tabs");
   tabs.innerHTML = "";
 
-  eraText.forEach((e,i)=>{
+  eraList.forEach((e,i)=>{
     const div = document.createElement("div");
-    div.textContent = e[lang];
+    div.textContent = e.text;
 
-    const active = viewEra ? (viewEra === e[lang]) : (currentEraIndex === i);
+    const active = viewEra ? (viewEra === e.text) : (currentEraIndex === i);
     div.className = "era-tab" + (active ? " active" : "");
 
     div.onclick = () => {
-      viewEra = (e[lang] === eraNameByIndex(currentEraIndex)) ? null : e[lang];
+      viewEra = (e.text === eraNameByIndex(currentEraIndex)) ? null : e.text;
       buildEraTabs();
       renderZukan();
     };
@@ -263,7 +228,6 @@ function renderZukan(){
   const box = document.getElementById("zukan-info-box");
   box.innerHTML = "";
 
-  // ▼ 料理タブ
   if (zukanTab === "料理") {
     const eraRecipes = recipes.filter(r => r.時代 === eraName);
     eraRecipes.forEach(r => {
@@ -284,7 +248,6 @@ function renderZukan(){
     return;
   }
 
-  // ▼ 素材・技術・道具
   const eraItems = dataList.filter(d => d.分類 === zukanTab && d.時代 === eraName);
   const ownedSet = owned[zukanTab];
 
@@ -322,14 +285,14 @@ document.getElementById("btn-material").onclick = () => {
   );
 
   if (candidates.length === 0) {
-    log(t(msgText, "no_more_material"));
+    log(msgText["no_more_material"]);
     return;
   }
 
   const item = candidates[Math.floor(Math.random() * candidates.length)];
   owned.素材.add(item.id);
 
-  log(`${t(msgText, "found_material")}<span class="item-name">${item.name}</span><br>${item.メッセージ}`);
+  log(`${msgText["found_material"]}<span class="item-name">${item.name}</span><br>${item.メッセージ}`);
   renderHome();
   renderZukan();
 };
@@ -343,14 +306,14 @@ document.getElementById("btn-tech").onclick = () => {
   );
 
   if (candidates.length === 0) {
-    log(t(msgText, "no_more_tech"));
+    log(msgText["no_more_tech"]);
     return;
   }
 
   const item = candidates[Math.floor(Math.random() * candidates.length)];
   owned.技術.add(item.id);
 
-  log(`${t(msgText, "learn_tech")}<span class="item-name">${item.name}</span><br>${item.メッセージ}`);
+  log(`${msgText["learn_tech"]}<span class="item-name">${item.name}</span><br>${item.メッセージ}`);
   renderHome();
   renderZukan();
 };
@@ -364,14 +327,14 @@ document.getElementById("btn-tool").onclick = () => {
   );
 
   if (candidates.length === 0) {
-    log(t(msgText, "no_more_tool"));
+    log(msgText["no_more_tool"]);
     return;
   }
 
   const item = candidates[Math.floor(Math.random() * candidates.length)];
   owned.道具.add(item.id);
 
-  log(`${t(msgText, "develop_tool")}<span class="item-name">${item.name}</span><br>${item.メッセージ}`);
+  log(`${msgText["develop_tool"]}<span class="item-name">${item.name}</span><br>${item.メッセージ}`);
   renderHome();
   renderZukan();
 };
@@ -397,14 +360,14 @@ document.getElementById("btn-cook").onclick = () => {
   });
 
   if (available.length === 0) {
-    log(t(msgText, "no_more_recipe"));
+    log(msgText["no_more_recipe"]);
     return;
   }
 
   available.forEach(r => {
     completed.add(r.料理);
 
-    log(`${t(msgText, "complete_recipe")}<span class="recipe-name">${r.料理}</span><br> → ${r.メッセージ}`);
+    log(`${msgText["complete_recipe"]}<span class="recipe-name">${r.料理}</span><br> → ${r.メッセージ}`);
 
     popupQueue.push(r);
   });
@@ -454,14 +417,13 @@ function showPopupForRecipe(r) {
   popup.style.display = "flex";
 }
 
-// ID → 日本語名
 function getNameById(id) {
   const item = dataList.find(d => d.id === id);
   return item ? item.name : id;
 }
 
 // ===============================
-// ポップアップ閉じる（どこでもタップで閉じる）
+// ポップアップ閉じる
 // ===============================
 document.getElementById("popup").onclick = () => {
   document.getElementById("popup").style.display = "none";
@@ -476,15 +438,15 @@ document.getElementById("popup").onclick = () => {
 // 次の時代へ
 // ===============================
 document.getElementById("btn-next-era").onclick = () => {
-  if (currentEraIndex < eraText.length - 1) {
+  if (currentEraIndex < eraList.length - 1) {
     currentEraIndex++;
     viewEra = null;
-    log(`${t(msgText, "era_advance")}${eraNameByIndex(currentEraIndex)}`);
+    log(`${msgText["era_advance"]}${eraNameByIndex(currentEraIndex)}`);
     renderHome();
     buildEraTabs();
     renderZukan();
   } else {
-    log("No more eras.");
+    log("これ以上の時代はありません。");
   }
 };
 
@@ -500,4 +462,10 @@ document.getElementById("btn-go-zukan").onclick = () => {
 
 document.getElementById("btn-go-home").onclick = () => {
   document.getElementById("zukan-screen").classList.add("hidden");
-  document.getElementBy
+  document.getElementById("home-screen").classList.remove("hidden");
+};
+
+// ===============================
+// 起動
+// ===============================
+loadCSV();
