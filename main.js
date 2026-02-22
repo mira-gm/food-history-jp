@@ -45,12 +45,15 @@ async function loadCSV() {
   // 日本語 UI
   uiText = parseKeyValueCSV(await fetch("./data/ui.csv").then(r => r.text()));
   msgText = parseKeyValueCSV(await fetch("./data/message.csv").then(r => r.text()));
-  eraList = parseKeyValueCSV_Array(await fetch("./data/era.csv").then(r => r.text()));
+  eraList = parseEraCSV(await fetch("./data/era.csv").then(r => r.text()));
 
   applyUIText();
   renderHome();
   buildEraTabs();
   renderZukan();
+
+  // 最初の時代ポップアップ
+  showEraPopup(eraList[currentEraIndex]);
 }
 
 // ===============================
@@ -79,12 +82,23 @@ function parseKeyValueCSV(text){
   return map;
 }
 
-// id,text 用
-function parseKeyValueCSV_Array(text){
+// 拡張版 era.csv 用
+function parseEraCSV(text){
   const lines = text.trim().split(/\r?\n/);
+  const header = lines[0].split(",");
+
   return lines.slice(1).map(line => {
-    const [id, text] = line.split(",");
-    return { id, text };
+    const cols = line.split(",");
+    return {
+      id: cols[0],
+      時代名: cols[1],
+      開始年: cols[2],
+      終了年: cols[3],
+      ポップアップ画像: cols[4],
+      時代タイトル: cols[5],
+      時代説明: cols[6],
+      食文化影響: cols[7]
+    };
   });
 }
 
@@ -105,7 +119,7 @@ function applyUIText() {
 // 時代名
 // ===============================
 function eraNameByIndex(i) {
-  return eraList[i]?.text ?? "？？？";
+  return eraList[i]?.時代名 ?? "？？？";
 }
 
 // ===============================
@@ -171,9 +185,10 @@ function canCookAnyRecipe(){
 // ホーム画面
 // ===============================
 function renderHome(){
-  const eraName = eraNameByIndex(currentEraIndex);
+  const era = eraList[currentEraIndex];
+
   document.getElementById("era").textContent =
-    uiText["era_label"] + eraName;
+    `${era.時代名}（${era.開始年}〜${era.終了年}）`;
 
   const imageMap = {
     "縄文": "./data/01jomon.png",
@@ -185,7 +200,7 @@ function renderHome(){
     "明治・大正": "./data/07meijitaisyo.png",
     "昭和・平成": "./data/08syowaheisei.png"
   };
-  document.getElementById("era-image").src = imageMap[eraName];
+  document.getElementById("era-image").src = imageMap[era.時代名];
 
   const cookBtn = document.getElementById("btn-cook");
   cookBtn.disabled = !canCookAnyRecipe();
@@ -205,13 +220,13 @@ function buildEraTabs(){
 
   eraList.forEach((e,i)=>{
     const div = document.createElement("div");
-    div.textContent = e.text;
+    div.textContent = e.時代名;
 
-    const active = viewEra ? (viewEra === e.text) : (currentEraIndex === i);
+    const active = viewEra ? (viewEra === e.時代名) : (currentEraIndex === i);
     div.className = "era-tab" + (active ? " active" : "");
 
     div.onclick = () => {
-      viewEra = (e.text === eraNameByIndex(currentEraIndex)) ? null : e.text;
+      viewEra = (e.時代名 === eraNameByIndex(currentEraIndex)) ? null : e.時代名;
       buildEraTabs();
       renderZukan();
     };
@@ -391,7 +406,7 @@ function showNextPopup() {
 }
 
 // ===============================
-// ポップアップ（単体表示）
+// 料理ポップアップ
 // ===============================
 function showPopupForRecipe(r) {
   popupActive = true;
@@ -441,13 +456,36 @@ document.getElementById("btn-next-era").onclick = () => {
   if (currentEraIndex < eraList.length - 1) {
     currentEraIndex++;
     viewEra = null;
+
     log(`${msgText["era_advance"]}${eraNameByIndex(currentEraIndex)}`);
+
     renderHome();
     buildEraTabs();
     renderZukan();
+
+    // ★ 時代ポップアップ表示
+    showEraPopup(eraList[currentEraIndex]);
+
   } else {
     log("これ以上の時代はありません。");
   }
+};
+
+// ===============================
+// 時代ポップアップ
+// ===============================
+function showEraPopup(era) {
+  const box = document.getElementById("era-popup");
+  document.getElementById("era-popup-img").src = "./data/" + era.ポップアップ画像;
+  document.getElementById("era-popup-title").textContent = era.時代タイトル;
+  document.getElementById("era-popup-desc").textContent = era.時代説明;
+  document.getElementById("era-popup-food").textContent = era.食文化影響;
+
+  box.style.display = "flex";
+}
+
+document.getElementById("era-popup").onclick = () => {
+  document.getElementById("era-popup").style.display = "none";
 };
 
 // ===============================
