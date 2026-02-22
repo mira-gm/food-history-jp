@@ -398,7 +398,7 @@ document.getElementById("btn-cook").onclick = () => {
 
 // ===============================
 // ポップアップ（キュー処理）
-===============================
+// ===============================
 function showNextPopup() {
   if (popupActive) return;
   if (popupQueue.length === 0) return;
