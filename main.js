@@ -187,8 +187,10 @@ function canCookAnyRecipe(){
 function renderHome(){
   const era = eraList[currentEraIndex];
 
-  document.getElementById("era").textContent =
-    `${era.時代名}（${era.開始年}〜${era.終了年}）`;
+  document.getElementById("era").innerHTML =
+    `${era.時代名}時代<br>（${era.開始年}〜${era.終了年}）`;
+
+
 
   const imageMap = {
     "縄文": "./data/01jomon.png",
