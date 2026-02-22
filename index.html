@@ -295,9 +295,9 @@ body {
 <!-- ============================
      図鑑画面（親指操作最適化）
 ============================ -->
-<div id="zukan-screen" class="hidden">
+<div id="zukan-screen" class="hidden" style="height:100vh; overflow:hidden; display:flex; flex-direction:column;">
 
-  <div id="zukan-info-box"></div>
+  <div id="zukan-info-box" style="flex:1; overflow-y:auto;"></div>
 
   <div id="zukan-tabs">
     <div class="info-tab active" data-type="料理">料理</div>
@@ -309,7 +309,10 @@ body {
   <div id="era-tabs"></div>
 
   <button id="btn-zukan-home" class="home-big-btn">ホームへ戻る</button>
+
 </div>
+
+
 
 <!-- ============================
      料理ポップアップ
