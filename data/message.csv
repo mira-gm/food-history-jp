@@ -1,0 +1,11 @@
+
+key,jp,en
+found_material,素材発見：,Found material:
+learn_tech,技術習得：,Learned technique:
+develop_tool,道具開発：,Developed tool:
+complete_recipe,料理完成：,Recipe completed:
+era_advance,時代が進みました：,Era advanced:
+no_more_material,この時代の素材はすべて発見済み。,All materials in this era discovered.
+no_more_tech,この時代の技術はすべて習得済み。,All techniques in this era learned.
+no_more_tool,この時代の道具はすべて開発済み。,All tools in this era developed.
+no_more_recipe,この時代で作れる料理はありません。,No more recipes can be cooked in this era.
