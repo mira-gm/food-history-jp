@@ -9,7 +9,7 @@
 body {
   font-family: sans-serif;
   margin: 0;
-  background: #000; /* ★ 背景黒 */
+  background: #000;
   color: #fff;
 }
 
@@ -51,7 +51,7 @@ body {
   color: #000;
   padding: 10px;
   border-radius: 8px;
-  height: 28vh; /* スマホでスクロール不要 */
+  height: 28vh;
   overflow-y: auto;
   margin: 10px 0;
   text-align: left;
@@ -91,14 +91,66 @@ body {
 }
 
 /* ============================
-   図鑑画面（変更なし）
+   図鑑画面（親指操作最適化）
 ============================ */
 #zukan-screen {
   padding: 10px;
   background: #000;
   color: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
+/* 一覧（上部） */
+#zukan-info-box {
+  flex: 1;
+  overflow-y: auto;
+  border: 1px solid #444;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+#zukan-info-box div {
+  padding: 12px;
+  border-bottom: 1px solid #555;
+  background: #222;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 押せる感（右に矢印） */
+#zukan-info-box div::after {
+  content: "›";
+  font-size: 20px;
+  color: #888;
+}
+
+/* 分類タブ（中央） */
+#zukan-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.info-tab {
+  flex: 1;
+  padding: 10px;
+  background: #333;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.info-tab.active {
+  background: #ffcc66;
+  color: #000;
+}
+
+/* 時代タブ（下部） */
 #era-tabs {
   display: flex;
   overflow-x: auto;
@@ -118,26 +170,15 @@ body {
   color: #000;
 }
 
-#zukan-tabs {
-  display: flex;
-  gap: 6px;
-  margin-bottom: 10px;
-}
-
-.info-tab {
-  padding: 6px 10px;
-  background: #333;
-  border-radius: 6px;
-}
-
-.info-tab.active {
+/* 一番下の大ボタン */
+.home-big-btn {
+  width: 100%;
+  padding: 16px;
+  font-size: 20px;
   background: #ffcc66;
   color: #000;
-}
-
-#zukan-info-box div {
-  padding: 6px;
-  border-bottom: 1px solid #555;
+  border: none;
+  border-radius: 10px;
 }
 
 /* ============================
@@ -221,7 +262,6 @@ body {
 ============================ -->
 <div id="home-screen">
 
-  <!-- 上部：時代名＋画像 -->
   <div id="era-top">
     <div id="era-text">
       <div id="era"></div>
@@ -229,12 +269,10 @@ body {
     <img id="era-image" src="">
   </div>
 
-  <!-- 中央：ログ -->
   <div id="log-box">
     <div id="log"></div>
   </div>
 
-  <!-- 下部：行動ボタン -->
   <div class="action-row">
     <button id="btn-material">素材探索</button>
     <button id="btn-tech">技術研究</button>
@@ -250,12 +288,11 @@ body {
 </div>
 
 <!-- ============================
-     図鑑画面（変更なし）
+     図鑑画面（親指操作最適化）
 ============================ -->
 <div id="zukan-screen" class="hidden">
-  <button id="btn-go-home">ホームへ</button>
 
-  <div id="era-tabs"></div>
+  <div id="zukan-info-box"></div>
 
   <div id="zukan-tabs">
     <div class="info-tab active" data-type="素材">素材</div>
@@ -264,7 +301,9 @@ body {
     <div class="info-tab" data-type="料理">料理</div>
   </div>
 
-  <div id="zukan-info-box"></div>
+  <div id="era-tabs"></div>
+
+  <button id="btn-go-home" class="home-big-btn">ホームへ戻る</button>
 </div>
 
 <!-- ============================
