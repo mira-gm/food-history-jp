@@ -195,7 +195,7 @@ function renderHome(){
     "弥生": "./data/02yayoi.png",
     "古墳・奈良": "./data/03kofunnara.png",
     "平安・鎌倉": "./data/04heiankamakura.png",
-    "室町戦国": "./data/05muromachiadutimomoyama.png",
+    "室町戦国": "./data/05muromachisengoku.png",
     "江戸": "./data/06edo.png",
     "明治・大正": "./data/07meijitaisyo.png",
     "昭和・平成": "./data/08syowaheisei.png"
@@ -476,17 +476,17 @@ document.getElementById("btn-next-era").onclick = () => {
 // ===============================
 function showEraPopup(era) {
   const box = document.getElementById("era-popup");
+
   document.getElementById("era-popup-img").src = "./data/" + era.ポップアップ画像;
   document.getElementById("era-popup-title").textContent = era.時代タイトル;
+  document.getElementById("era-popup-year").textContent =
+    `（${era.開始年}〜${era.終了年}）`;
+
   document.getElementById("era-popup-desc").textContent = era.時代説明;
   document.getElementById("era-popup-food").textContent = era.食文化影響;
 
   box.style.display = "flex";
 }
-
-document.getElementById("era-popup").onclick = () => {
-  document.getElementById("era-popup").style.display = "none";
-};
 
 // ===============================
 // 画面切り替え
