@@ -13,8 +13,10 @@ body {
   color: #fff;
 }
 
-/* 画面切り替え */
-.hidden { display: none; }
+/* 画面切り替え（最強化） */
+.hidden {
+  display: none !important;
+}
 
 /* ============================
    ホーム画面
@@ -22,9 +24,10 @@ body {
 #home-screen {
   padding: 10px;
   text-align: center;
+  height: 100vh;
+  overflow: hidden;
 }
 
-/* 上部：時代名＋画像の横並び */
 #era-top {
   display: flex;
   justify-content: space-between;
@@ -45,7 +48,6 @@ body {
   border-radius: 8px;
 }
 
-/* 中央：メッセージログ（白背景） */
 #log-box {
   background: #fff;
   color: #000;
@@ -57,7 +59,6 @@ body {
   text-align: left;
 }
 
-/* 下部：行動ボタン */
 .action-row {
   display: flex;
   justify-content: space-between;
@@ -91,7 +92,7 @@ body {
 }
 
 /* ============================
-   図鑑画面（親指操作最適化）
+   図鑑画面（完全切り替え）
 ============================ */
 #zukan-screen {
   padding: 10px;
@@ -100,9 +101,9 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  overflow: hidden;
 }
 
-/* 一覧（上部） */
 #zukan-info-box {
   flex: 1;
   overflow-y: auto;
@@ -123,19 +124,16 @@ body {
   align-items: center;
 }
 
-/* 料理だけ矢印を付ける */
 .zukan-item.cookable::after {
   content: "›";
   font-size: 20px;
   color: #888;
 }
 
-/* 素材・技術・道具は押せない見た目 */
 .zukan-item.disabled {
   opacity: 0.6;
 }
 
-/* 分類タブ（中央） */
 #zukan-tabs {
   display: flex;
   gap: 6px;
@@ -155,7 +153,6 @@ body {
   color: #000;
 }
 
-/* 時代タブ（下部） */
 #era-tabs {
   display: flex;
   overflow-x: auto;
@@ -175,7 +172,6 @@ body {
   color: #000;
 }
 
-/* 一番下の大ボタン */
 .home-big-btn {
   width: 100%;
   padding: 16px;
@@ -293,11 +289,11 @@ body {
 </div>
 
 <!-- ============================
-     図鑑画面（親指操作最適化）
+     図鑑画面
 ============================ -->
-<div id="zukan-screen" class="hidden" style="height:100vh; overflow:hidden; display:flex; flex-direction:column;">
+<div id="zukan-screen" class="hidden">
 
-  <div id="zukan-info-box" style="flex:1; overflow-y:auto;"></div>
+  <div id="zukan-info-box"></div>
 
   <div id="zukan-tabs">
     <div class="info-tab active" data-type="料理">料理</div>
@@ -311,8 +307,6 @@ body {
   <button id="btn-zukan-home" class="home-big-btn">ホームへ戻る</button>
 
 </div>
-
-
 
 <!-- ============================
      料理ポップアップ
