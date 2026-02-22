@@ -292,6 +292,14 @@ document.querySelectorAll("#zukan-screen .info-tab").forEach(tab => {
 });
 
 // ===============================
+// 図鑑へ
+// ===============================
+document.getElementById("btn-go-zukan").onclick = () => {
+  document.getElementById("home-screen").classList.add("hidden");
+  document.getElementById("zukan-screen").classList.remove("hidden");
+};
+
+// ===============================
 // 行動ボタン
 // ===============================
 document.getElementById("btn-material").onclick = () => {
