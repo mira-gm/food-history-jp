@@ -1,17 +1,11 @@
-
-key,jp,en
-title,日本食文化発展ゲーム,Japanese Food Culture Game
-btn_material,素材探索,Explore Ingredients
-btn_tech,技術研究,Research Techniques
-btn_tool,道具開発,Develop Tools
-btn_cook,料理を作る！,Cook!
-btn_zukan,図鑑へ,Encyclopedia
-btn_home,ホームへ,Home
-btn_next,次の時代へ,Next Era
-era_label,時代：,Era:
-zukan_tab_material,素材,Ingredients
-zukan_tab_tech,技術,Techniques
-zukan_tab_tool,道具,Tools
-zukan_tab_recipe,料理,Recipes
-popup_ok,OK,OK
-popup_title_recipe,料理完成,Recipe Completed
+key,text
+btn_material,素材探索
+btn_tech,技術研究
+btn_tool,道具開発
+btn_cook,料理を作る！
+btn_zukan,図鑑へ
+btn_home,ホームへ
+btn_next,次の時代へ
+era_label,時代：
+popup_ok,OK
+popup_title_recipe,料理完成
