@@ -9,56 +9,113 @@
 body {
   font-family: sans-serif;
   margin: 0;
-  background: #f5f5f5;
+  background: #000; /* ★ 背景黒 */
+  color: #fff;
 }
 
 /* 画面切り替え */
 .hidden { display: none; }
 
-/* ホーム画面 */
+/* ============================
+   ホーム画面
+============================ */
 #home-screen {
-  padding: 20px;
+  padding: 10px;
   text-align: center;
 }
-#era {
-  font-size: 24px;
-  margin-bottom: 10px;
-  line-height: 1.4;
-}
-#era-image {
-  width: 80%;
-  max-width: 400px;
-  margin-bottom: 20px;
-}
-.action-buttons button {
-  width: 80%;
-  max-width: 300px;
-  padding: 12px;
-  margin: 8px;
-  font-size: 18px;
-}
-.enabled {
-  background: #ffcc66;
-}
 
-/* 図鑑 */
-#zukan-screen {
+/* 上部：時代名＋画像の横並び */
+#era-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 10px;
 }
+
+#era-text {
+  text-align: left;
+  font-size: 22px;
+  line-height: 1.4;
+  flex: 1;
+}
+
+#era-image {
+  width: 40%;
+  max-width: 180px;
+  border-radius: 8px;
+}
+
+/* 中央：メッセージログ（白背景） */
+#log-box {
+  background: #fff;
+  color: #000;
+  padding: 10px;
+  border-radius: 8px;
+  height: 28vh; /* スマホでスクロール不要 */
+  overflow-y: auto;
+  margin: 10px 0;
+  text-align: left;
+}
+
+/* 下部：行動ボタン */
+.action-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.action-row button {
+  flex: 1;
+  margin: 0 5px;
+  padding: 14px 0;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  background: #333;
+  color: #fff;
+}
+
+#btn-cook {
+  width: 100%;
+  padding: 16px;
+  font-size: 18px;
+  margin: 10px 0;
+  background: #444;
+}
+
+#btn-go-zukan, #btn-next-era {
+  width: 48%;
+  padding: 14px;
+  font-size: 16px;
+  background: #555;
+}
+
+/* ============================
+   図鑑画面（変更なし）
+============================ */
+#zukan-screen {
+  padding: 10px;
+  background: #000;
+  color: #fff;
+}
+
 #era-tabs {
   display: flex;
   overflow-x: auto;
   gap: 6px;
   margin-bottom: 10px;
 }
+
 .era-tab {
   padding: 6px 10px;
-  background: #ddd;
+  background: #333;
   border-radius: 6px;
   white-space: nowrap;
 }
+
 .era-tab.active {
   background: #ffcc66;
+  color: #000;
 }
 
 #zukan-tabs {
@@ -66,21 +123,26 @@ body {
   gap: 6px;
   margin-bottom: 10px;
 }
+
 .info-tab {
   padding: 6px 10px;
-  background: #ddd;
+  background: #333;
   border-radius: 6px;
 }
+
 .info-tab.active {
   background: #ffcc66;
+  color: #000;
 }
 
 #zukan-info-box div {
   padding: 6px;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #555;
 }
 
-/* 料理ポップアップ */
+/* ============================
+   料理ポップアップ
+============================ */
 #popup {
   position: fixed;
   top: 0; left: 0;
@@ -91,6 +153,7 @@ body {
   align-items: center;
   z-index: 2000;
 }
+
 #popup-content {
   background: white;
   padding: 20px;
@@ -98,19 +161,18 @@ body {
   max-width: 350px;
   border-radius: 10px;
   text-align: center;
+  color: #000;
 }
+
 #popup-img {
   width: 100%;
   border-radius: 6px;
   margin-bottom: 10px;
 }
-#popup-close {
-  margin-top: 10px;
-  padding: 8px 20px;
-  font-size: 16px;
-}
 
-/* 時代ポップアップ */
+/* ============================
+   時代ポップアップ
+============================ */
 #era-popup {
   position: fixed;
   top: 0; left: 0;
@@ -121,6 +183,7 @@ body {
   align-items: center;
   z-index: 3000;
 }
+
 #era-popup-content {
   background: white;
   padding: 20px;
@@ -128,49 +191,67 @@ body {
   max-width: 380px;
   border-radius: 10px;
   text-align: center;
+  color: #000;
 }
+
 #era-popup-img {
   width: 100%;
   border-radius: 6px;
   margin-bottom: 10px;
 }
+
 #era-popup-title {
   font-size: 22px;
   margin-bottom: 6px;
 }
+
 #era-popup-year {
   font-size: 18px;
   color: #555;
   margin-bottom: 10px;
 }
-#era-popup-desc,
-#era-popup-food {
-  text-align: left;
-  margin-bottom: 10px;
-}
+
 </style>
 </head>
 
 <body>
 
-<!-- ホーム画面 -->
+<!-- ============================
+     ホーム画面
+============================ -->
 <div id="home-screen">
-  <div id="era">時代：</div>
-  <img id="era-image" src="">
-  
-  <div class="action-buttons">
+
+  <!-- 上部：時代名＋画像 -->
+  <div id="era-top">
+    <div id="era-text">
+      <div id="era"></div>
+    </div>
+    <img id="era-image" src="">
+  </div>
+
+  <!-- 中央：ログ -->
+  <div id="log-box">
+    <div id="log"></div>
+  </div>
+
+  <!-- 下部：行動ボタン -->
+  <div class="action-row">
     <button id="btn-material">素材探索</button>
     <button id="btn-tech">技術研究</button>
     <button id="btn-tool">道具開発</button>
-    <button id="btn-cook">料理を作る！</button>
+  </div>
+
+  <button id="btn-cook">料理を作る！</button>
+
+  <div class="action-row">
     <button id="btn-go-zukan">図鑑へ</button>
     <button id="btn-next-era">次の時代へ</button>
   </div>
-
-  <div id="log" style="margin-top:20px; text-align:left; padding:10px; background:#fff; height:200px; overflow-y:auto;"></div>
 </div>
 
-<!-- 図鑑画面 -->
+<!-- ============================
+     図鑑画面（変更なし）
+============================ -->
 <div id="zukan-screen" class="hidden">
   <button id="btn-go-home">ホームへ</button>
 
@@ -186,7 +267,9 @@ body {
   <div id="zukan-info-box"></div>
 </div>
 
-<!-- 料理ポップアップ -->
+<!-- ============================
+     料理ポップアップ
+============================ -->
 <div id="popup">
   <div id="popup-content">
     <img id="popup-img" src="">
@@ -196,7 +279,9 @@ body {
   </div>
 </div>
 
-<!-- 時代ポップアップ -->
+<!-- ============================
+     時代ポップアップ
+============================ -->
 <div id="era-popup">
   <div id="era-popup-content">
     <img id="era-popup-img" src="">
