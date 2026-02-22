@@ -52,7 +52,7 @@ async function loadCSV() {
   buildEraTabs();
   renderZukan();
 
-  // 最初の時代ポップアップ
+  // ★ 最初の時代ポップアップ
   showEraPopup(eraList[currentEraIndex]);
 }
 
@@ -187,17 +187,16 @@ function canCookAnyRecipe(){
 function renderHome(){
   const era = eraList[currentEraIndex];
 
+  // ★ 時代名＋西暦を改行して表示
   document.getElementById("era").innerHTML =
     `${era.時代名}時代<br>（${era.開始年}〜${era.終了年}）`;
-
-
 
   const imageMap = {
     "縄文": "./data/01jomon.png",
     "弥生": "./data/02yayoi.png",
     "古墳・奈良": "./data/03kofunnara.png",
     "平安・鎌倉": "./data/04heiankamakura.png",
-    "室町戦国": "./data/05muromachisengoku.png",
+    "室町戦国": "./data/05muromachiadutimomoyama.png",
     "江戸": "./data/06edo.png",
     "明治・大正": "./data/07meijitaisyo.png",
     "昭和・平成": "./data/08syowaheisei.png"
@@ -440,7 +439,7 @@ function getNameById(id) {
 }
 
 // ===============================
-// ポップアップ閉じる
+// 料理ポップアップ閉じる
 // ===============================
 document.getElementById("popup").onclick = () => {
   document.getElementById("popup").style.display = "none";
@@ -481,6 +480,8 @@ function showEraPopup(era) {
 
   document.getElementById("era-popup-img").src = "./data/" + era.ポップアップ画像;
   document.getElementById("era-popup-title").textContent = era.時代タイトル;
+
+  // ★ 西暦表示
   document.getElementById("era-popup-year").textContent =
     `（${era.開始年}〜${era.終了年}）`;
 
@@ -489,6 +490,10 @@ function showEraPopup(era) {
 
   box.style.display = "flex";
 }
+
+document.getElementById("era-popup").onclick = () => {
+  document.getElementById("era-popup").style.display = "none";
+};
 
 // ===============================
 // 画面切り替え
