@@ -99,26 +99,9 @@ body {
 /* 料理を作る！（無効時）：グレー */
 #btn-cook {
   background: #666;
-  padding: 22px 0; /* ← 大きくした */
+  padding: 22px 0;
   font-size: 20px;
   border-radius: 12px;
-}
-
-/* 料理を作る！（有効時）：赤く光る */
-#btn-cook.enabled {
-  background: #ff2d2d;
-  color: #fff;
-  transition: 0.15s;
-}
-#btn-cook.enabled:hover,
-#btn-cook.enabled:active {
-  background: #ff4d4d;
-  box-shadow: 0 0 12px rgba(255, 80, 80, 0.8);
-}
-
-/* 図鑑へ：ダークパープル */
-#btn-go-zukan {
-  background: #6d28d9;
 }
 
 /* 次の時代へ（無効時）：グレー */
@@ -126,20 +109,54 @@ body {
   background: #666;
 }
 
-/* 次の時代へ（有効時）：赤く光る */
-#btn-next-era.enabled {
-  background: #ff2d2d;
-  color: #fff;
-  transition: 0.15s;
-}
-#btn-next-era.enabled:hover,
-#btn-next-era.enabled:active {
-  background: #ff4d4d;
-  box-shadow: 0 0 12px rgba(255, 80, 80, 0.8);
+/* 図鑑へ：ダークパープル */
+#btn-go-zukan {
+  background: #6d28d9;
 }
 
 /* ============================
-   図鑑画面（完全切り替え）
+   “ぼわっと光る”アニメーション
+============================ */
+@keyframes pulse-red {
+  0% {
+    background: #ff2d2d;
+    box-shadow: 0 0 6px rgba(255, 80, 80, 0.4);
+  }
+  50% {
+    background: #ff4d4d;
+    box-shadow: 0 0 16px rgba(255, 80, 80, 0.9);
+  }
+  100% {
+    background: #ff2d2d;
+    box-shadow: 0 0 6px rgba(255, 80, 80, 0.4);
+  }
+}
+
+/* 料理を作る！（有効時） */
+#btn-cook.enabled {
+  animation: pulse-red 1.4s infinite ease-in-out;
+  color: #fff;
+}
+
+/* 次の時代へ（有効時） */
+#btn-next-era.enabled {
+  animation: pulse-red 1.4s infinite ease-in-out;
+  color: #fff;
+}
+
+/* 図鑑画面：ホームへ戻る（常に光る） */
+#btn-zukan-home {
+  animation: pulse-red 1.4s infinite ease-in-out;
+  background: #ff2d2d;
+  color: #fff;
+  padding: 22px;
+  font-size: 22px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+/* ============================
+   図鑑画面
 ============================ */
 #zukan-screen {
   padding: 10px;
@@ -153,7 +170,7 @@ body {
 
 #zukan-info-box {
   flex: 1;
-  min-height: 0; /* ← はみ出し防止 */
+  min-height: 0;
   overflow-y: auto;
   border: 1px solid #444;
   padding: 10px;
@@ -218,25 +235,6 @@ body {
 .era-tab.active {
   background: #ffcc66;
   color: #000;
-}
-
-/* ============================
-   図鑑画面：ホームへ戻る（大きく＋赤く光る）
-============================ */
-#btn-zukan-home {
-  background: #ff2d2d;
-  color: #fff;
-  padding: 22px;
-  font-size: 22px;
-  border-radius: 12px;
-  margin-top: 10px;
-  flex-shrink: 0; /* ← 下に固定される */
-  transition: 0.15s;
-}
-#btn-zukan-home:hover,
-#btn-zukan-home:active {
-  background: #ff4d4d;
-  box-shadow: 0 0 12px rgba(255, 80, 80, 0.8);
 }
 
 /* ============================
