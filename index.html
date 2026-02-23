@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>日本食文化発展ゲーム</title>
+<title>食文化史</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -74,7 +74,7 @@ body {
   font-size: 16px;
   border: none;
   color: #fff;
-  border-radius: 10px; /* ← 全ボタン角丸統一 */
+  border-radius: 10px;
 }
 
 /* ============================
@@ -99,6 +99,9 @@ body {
 /* 料理を作る！（無効時）：グレー */
 #btn-cook {
   background: #666;
+  padding: 22px 0; /* ← 大きくした */
+  font-size: 20px;
+  border-radius: 12px;
 }
 
 /* 料理を作る！（有効時）：赤く光る */
@@ -150,6 +153,7 @@ body {
 
 #zukan-info-box {
   flex: 1;
+  min-height: 0; /* ← はみ出し防止 */
   overflow-y: auto;
   border: 1px solid #444;
   padding: 10px;
@@ -216,11 +220,17 @@ body {
   color: #000;
 }
 
-/* 図鑑画面：ホームへ戻る（赤く光る） */
+/* ============================
+   図鑑画面：ホームへ戻る（大きく＋赤く光る）
+============================ */
 #btn-zukan-home {
   background: #ff2d2d;
   color: #fff;
-  border-radius: 10px;
+  padding: 22px;
+  font-size: 22px;
+  border-radius: 12px;
+  margin-top: 10px;
+  flex-shrink: 0; /* ← 下に固定される */
   transition: 0.15s;
 }
 #btn-zukan-home:hover,
