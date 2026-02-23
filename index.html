@@ -6,11 +6,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+/* ============================
+   PC で巨大化しないように中央固定
+============================ */
 body {
   font-family: sans-serif;
   margin: 0;
   background: #000;
   color: #fff;
+  display: flex;
+  justify-content: center;
+}
+
+/* ゲーム画面の最大幅をスマホサイズに固定 */
+#home-screen,
+#zukan-screen,
+#popup,
+#era-popup {
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 /* 画面切り替え（最強化） */
@@ -78,25 +93,13 @@ body {
 }
 
 /* ============================
-   ホーム画面ボタン色（指定どおり）
+   ホーム画面ボタン色
 ============================ */
+#btn-material { background: #2e8b57; }
+#btn-tech     { background: #2563eb; }
+#btn-tool     { background: #d97706; }
+#btn-go-zukan { background: #6d28d9; }
 
-/* 素材探索：深いグリーン */
-#btn-material {
-  background: #2e8b57;
-}
-
-/* 技術研究：ディープブルー */
-#btn-tech {
-  background: #2563eb;
-}
-
-/* 道具開発：ブロンズ */
-#btn-tool {
-  background: #d97706;
-}
-
-/* 料理を作る！（無効時）：グレー */
 #btn-cook {
   background: #666;
   padding: 22px 0;
@@ -104,14 +107,8 @@ body {
   border-radius: 12px;
 }
 
-/* 次の時代へ（無効時）：グレー */
 #btn-next-era {
   background: #666;
-}
-
-/* 図鑑へ：ダークパープル */
-#btn-go-zukan {
-  background: #6d28d9;
 }
 
 /* ============================
@@ -135,23 +132,16 @@ body {
   }
 }
 
-/* 料理を作る！（有効時） */
-#btn-cook.enabled {
-  animation: pulse-red 1.4s infinite ease-in-out;
-  color: #fff;
-}
-
-/* 次の時代へ（有効時） */
-#btn-next-era.enabled {
-  animation: pulse-red 1.4s infinite ease-in-out;
-  color: #fff;
-}
-
-/* 図鑑画面：ホームへ戻る（常に光る） */
+#btn-cook.enabled,
+#btn-next-era.enabled,
 #btn-zukan-home {
   animation: pulse-red 1.4s infinite ease-in-out;
-  background: #ff2d2d;
   color: #fff;
+}
+
+/* 図鑑ホームへ戻るボタン */
+#btn-zukan-home {
+  background: #ff2d2d;
   padding: 22px;
   font-size: 22px;
   border-radius: 12px;
