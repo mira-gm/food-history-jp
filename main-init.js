@@ -25,7 +25,14 @@ let viewEra = null;
 let zukanTab = "料理";
 
 // ===============================
-// CSV 読み込み（file:// でも動く安全版）
+// 時代名を index から取得（★これが欠けていた）
+// ===============================
+function eraNameByIndex(i) {
+  return eraList[i]?.時代名 ?? "？？？";
+}
+
+// ===============================
+// CSV 読み込み
 // ===============================
 async function loadCSV() {
   try {
@@ -224,10 +231,6 @@ function renderZukan(){
 
     box.appendChild(div);
   });
-}
-
-function eraNameByIndex(i) {
-  return eraList[i]?.時代名 ?? "？？？";
 }
 
 // ===============================
