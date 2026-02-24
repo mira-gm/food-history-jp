@@ -226,6 +226,10 @@ function renderZukan(){
   });
 }
 
+function eraNameByIndex(i) {
+  return eraList[i]?.時代名 ?? "？？？";
+}
+
 // ===============================
 // 起動
 // ===============================
