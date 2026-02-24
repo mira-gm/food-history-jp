@@ -200,7 +200,6 @@ function canCookAnyRecipe(){
 function renderHome(){
   const era = eraList[currentEraIndex];
 
-  // ★ 時代名＋西暦を改行して表示
   document.getElementById("era").innerHTML =
     `${era.時代名}時代<br>（${era.開始年}〜${era.終了年}）`;
 
@@ -291,30 +290,6 @@ function renderZukan(){
   });
 }
 
-//■■その１ここまで
-
-// ===============================
-// 図鑑：分類タブ
-// ===============================
-document.querySelectorAll("#zukan-screen .info-tab").forEach(tab => {
-  tab.onclick = () => {
-    document.querySelectorAll("#zukan-screen .info-tab")
-      .forEach(t => t.classList.remove("active"));
-
-    tab.classList.add("active");
-    zukanTab = tab.dataset.type;
-    renderZukan();
-  };
-});
-
-// ===============================
-// 図鑑へ
-// ===============================
-document.getElementById("btn-go-zukan").onclick = () => {
-  document.getElementById("home-screen").classList.add("hidden");
-  document.getElementById("zukan-screen").classList.remove("hidden");
-};
-
 // ===============================
 // 行動ボタン：素材探索
 // ===============================
@@ -334,7 +309,6 @@ document.getElementById("btn-material").onclick = () => {
   const item = candidates[Math.floor(Math.random() * candidates.length)];
   owned.素材.add(item.id);
 
-  // ★ 色付きログ
   log(`${msgText["found_material"]}${coloredName(item.name, "素材")}<br>${item.メッセージ}`);
 
   renderHome();
@@ -360,7 +334,6 @@ document.getElementById("btn-tech").onclick = () => {
   const item = candidates[Math.floor(Math.random() * candidates.length)];
   owned.技術.add(item.id);
 
-  // ★ 色付きログ
   log(`${msgText["learn_tech"]}${coloredName(item.name, "技術")}<br>${item.メッセージ}`);
 
   renderHome();
@@ -386,7 +359,6 @@ document.getElementById("btn-tool").onclick = () => {
   const item = candidates[Math.floor(Math.random() * candidates.length)];
   owned.道具.add(item.id);
 
-  // ★ 色付きログ
   log(`${msgText["develop_tool"]}${coloredName(item.name, "道具")}<br>${item.メッセージ}`);
 
   renderHome();
@@ -421,7 +393,6 @@ document.getElementById("btn-cook").onclick = () => {
   available.forEach(r => {
     completed.add(r.料理);
 
-    // ★ 色付きログ
     log(`${msgText["complete_recipe"]}${coloredName(r.料理, "料理")}<br> → ${r.メッセージ}`);
 
     popupQueue.push(r);
@@ -435,7 +406,7 @@ document.getElementById("btn-cook").onclick = () => {
 
 // ===============================
 // ポップアップ（キュー処理）
-// ===============================
+=============================== */
 function showNextPopup() {
   if (popupActive) return;
   if (popupQueue.length === 0) return;
@@ -457,7 +428,7 @@ function showPopupForRecipe(r) {
   const detail = document.getElementById("popup-detail");
 
   img.src = "./data/" + gazoMap[r.料理];
-  title.innerHTML = coloredName(r.料理, "料理"); // ★ 色付きタイトル
+  title.innerHTML = coloredName(r.料理, "料理");
 
   const needM = needID(r.素材ID).map(id => coloredName(getNameById(id), "素材")).join("・") || "なし";
   const needT = needID(r.技術ID).map(id => coloredName(getNameById(id), "技術")).join("・") || "なし";
@@ -497,14 +468,12 @@ document.getElementById("btn-next-era").onclick = () => {
     currentEraIndex++;
     viewEra = null;
 
-    // ★ 色付きログ
     log(`${msgText["era_advance"]}${coloredName(eraNameByIndex(currentEraIndex), "時代")}`);
 
     renderHome();
     buildEraTabs();
     renderZukan();
 
-    // ★ 時代ポップアップ表示
     showEraPopup(eraList[currentEraIndex]);
 
   } else {
@@ -521,7 +490,6 @@ function showEraPopup(era) {
   document.getElementById("era-popup-img").src = "./data/" + era.ポップアップ画像;
   document.getElementById("era-popup-title").innerHTML = coloredName(era.時代タイトル, "時代");
 
-  // ★ 西暦表示
   document.getElementById("era-popup-year").textContent =
     `（${era.開始年}〜${era.終了年}）`;
 
