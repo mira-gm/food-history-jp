@@ -528,5 +528,29 @@ function showEraPopup(era) {
   document.getElementById("era-popup-img").src = "./data/" + era.ポップアップ画像;
   document.getElementById("era-popup-title").innerHTML = coloredName(era.時代タイトル, "時代");
 
+  // ★ 西暦表示
   document.getElementById("era-popup-year").textContent =
-    `（${era.開始年}〜${era.終了年
+    `（${era.開始年}〜${era.終了年}）`;
+
+  document.getElementById("era-popup-desc").textContent = era.時代説明;
+  document.getElementById("era-popup-food").textContent = era.食文化影響;
+
+  box.style.display = "flex";
+}
+
+document.getElementById("era-popup").onclick = () => {
+  document.getElementById("era-popup").style.display = "none";
+};
+
+// ===============================
+// 図鑑 → ホームへ戻る
+// ===============================
+document.getElementById("btn-zukan-home").onclick = () => {
+  document.getElementById("zukan-screen").classList.add("hidden");
+  document.getElementById("home-screen").classList.remove("hidden");
+};
+
+// ===============================
+// 起動
+// ===============================
+loadCSV();
