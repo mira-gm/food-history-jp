@@ -485,16 +485,6 @@ body {
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* CSV 読み込み完了を待つためのフラグ */
-  let csvLoaded = false;
-
-  /* loadCSV をフックして完了を検知 */
-  const originalLoadCSV = loadCSV;
-  loadCSV = async () => {
-    await originalLoadCSV();
-    csvLoaded = true;
-  };
-
   /* 料理画像リスト */
   const foodImages = [
     "101_yakizakana.png","102_nizakana.png","103_hoshizakana.png","104_kai_nikomi.png",
@@ -525,11 +515,11 @@ document.addEventListener("DOMContentLoaded", () => {
     scrollInner.appendChild(img);
   });
 
-  /* タップで開始（CSV 完了を待つ） */
+  /* タップで開始（eraList が読み込まれるまで待つ） */
   document.getElementById("title-screen").onclick = async () => {
 
-    /* CSV 読み込み完了まで待機 */
-    while (!csvLoaded) {
+    /* eraList が読み込まれるまで待機 */
+    while (!window.eraList || eraList.length === 0) {
       await new Promise(r => setTimeout(r, 50));
     }
 
