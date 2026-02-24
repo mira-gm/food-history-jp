@@ -61,13 +61,13 @@ body {
   width: 100%;
   overflow: hidden;
   opacity: 0.7;
-  padding: 10px 0; /* 見切れ防止 */
+  padding: 10px 0;
 }
 
 #title-scroll .scroll-inner {
   display: flex;
   width: max-content;
-  animation: scroll-food 35s linear infinite; /* ゆっくり */
+  animation: scroll-food 35s linear infinite;
 }
 
 #title-scroll img {
@@ -86,7 +86,7 @@ body {
 /* TAP TO START */
 #tap-to-start {
   font-size: 20px;
-  margin-bottom: 100px; /* 上に移動 */
+  margin-bottom: 100px;
   animation: blink 1.2s infinite;
   color: #fff;
 }
@@ -480,11 +480,22 @@ body {
 <script src="main.js"></script>
 
 <!-- ============================
-     タイトル画面 JS（ランダム料理）
+     タイトル画面 JS（CSV完了待ち＋ランダム料理）
 ============================ -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
+  /* CSV 読み込み完了を待つためのフラグ */
+  let csvLoaded = false;
+
+  /* loadCSV をフックして完了を検知 */
+  const originalLoadCSV = loadCSV;
+  loadCSV = async () => {
+    await originalLoadCSV();
+    csvLoaded = true;
+  };
+
+  /* 料理画像リスト */
   const foodImages = [
     "101_yakizakana.png","102_nizakana.png","103_hoshizakana.png","104_kai_nikomi.png",
     "105_jomon_cookie.png","106_yaki_shikaniku.png","107_shikaniku_nikomi.png","108_hoshiniku.png",
@@ -497,6 +508,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "801_ramen.png","802_hamburger.png","803_okonomiyaki.png","804_spaghetti.png","805_chuka_ryori.png","806_karaage.png","807_pizza.png","808_donburi.png"
   ];
 
+  /* シャッフル */
   function shuffle(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -505,6 +517,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return arr;
   }
 
+  /* スクロール画像を流し込む */
   const scrollInner = document.querySelector("#title-scroll .scroll-inner");
   shuffle([...foodImages]).forEach(name => {
     const img = document.createElement("img");
@@ -512,13 +525,24 @@ document.addEventListener("DOMContentLoaded", () => {
     scrollInner.appendChild(img);
   });
 
-  document.getElementById("title-screen").onclick = () => {
+  /* タップで開始（CSV 完了を待つ） */
+  document.getElementById("title-screen").onclick = async () => {
+
+    /* CSV 読み込み完了まで待機 */
+    while (!csvLoaded) {
+      await new Promise(r => setTimeout(r, 50));
+    }
+
     const t = document.getElementById("title-screen");
     t.classList.add("fade-out");
 
     setTimeout(() => {
       t.style.display = "none";
       document.getElementById("home-screen").classList.remove("hidden");
+
+      /* ★ 最初の縄文ポップアップをここで確実に表示 */
+      showEraPopup(eraList[currentEraIndex]);
+
     }, 300);
   };
 
