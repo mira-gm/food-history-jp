@@ -42,7 +42,7 @@ function coloredName(name, type) {
 }
 
 // ===============================
-// CSV 読み込み（★ file:// でも動く安全版）
+// CSV 読み込み（file:// でも動く安全版）
 // ===============================
 async function loadCSV() {
   try {
@@ -64,7 +64,7 @@ async function loadCSV() {
   } catch (e) {
     console.warn("CSV 読み込み失敗（file:// のため）");
 
-    // ★ CSV が読めなくてもゲームが動くように最低限のデータを入れる
+    // ★ CSV が読めなくてもゲームが動く最低限のデータ
     eraList = [{
       時代名: "縄文",
       開始年: "???",
@@ -101,7 +101,6 @@ async function loadCSV() {
     gazoMap = {};
   }
 
-  // ★ CSV が読めなくてもここは動く
   applyUIText();
   renderHome();
   buildEraTabs();
@@ -137,8 +136,6 @@ function parseKeyValueCSV(text){
 // 拡張版 era.csv 用
 function parseEraCSV(text){
   const lines = text.trim().split(/\r?\n/);
-  const header = lines[0].split(",");
-
   return lines.slice(1).map(line => {
     const cols = line.split(",");
     return {
@@ -174,7 +171,7 @@ function eraNameByIndex(i) {
 }
 
 // ===============================
-// ログ（色付き対応）
+// ログ
 // ===============================
 function log(msg){
   const el = document.getElementById("log");
@@ -294,7 +291,7 @@ function renderZukan(){
   const box = document.getElementById("zukan-info-box");
   box.innerHTML = "";
 
-  // ★ 料理タブ（押せる）
+  // ★ 料理タブ
   if (zukanTab === "料理") {
     const eraRecipes = recipes.filter(r => r.時代 === eraName);
     eraRecipes.forEach(r => {
@@ -313,7 +310,7 @@ function renderZukan(){
     return;
   }
 
-  // ★ 素材・技術・道具（押せない）
+  // ★ 素材・技術・道具
   const eraItems = dataList.filter(d => d.分類 === zukanTab && d.時代 === eraName);
   const ownedSet = owned[zukanTab];
 
@@ -528,7 +525,7 @@ function showEraPopup(era) {
   document.getElementById("era-popup-img").src = "./data/" + era.ポップアップ画像;
   document.getElementById("era-popup-title").innerHTML = coloredName(era.時代タイトル, "時代");
 
-  // ★ 西暦表示
+  // ★ 西暦表示（ここが壊れていた可能性が高い）
   document.getElementById("era-popup-year").textContent =
     `（${era.開始年}〜${era.終了年}）`;
 
@@ -554,3 +551,4 @@ document.getElementById("btn-zukan-home").onclick = () => {
 // 起動
 // ===============================
 loadCSV();
+
