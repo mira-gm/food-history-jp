@@ -45,30 +45,49 @@ function coloredName(name, type) {
 // CSV 読み込み
 // ===============================
 async function loadCSV() {
-  const sozaiText = await fetch("./data/sozai.csv").then(r => r.text());
-  const ryouriText = await fetch("./data/ryouri.csv").then(r => r.text());
-  const gazoText = await fetch("./data/gazo.csv").then(r => r.text());
+  try {
+    const sozaiText = await fetch("./data/sozai.csv").then(r => r.text());
+    const ryouriText = await fetch("./data/ryouri.csv").then(r => r.text());
+    const gazoText = await fetch("./data/gazo.csv").then(r => r.text());
 
-  dataList = parseCSV(sozaiText);
-  recipes = parseCSV(ryouriText);
+    dataList = parseCSV(sozaiText);
+    recipes = parseCSV(ryouriText);
 
-  parseCSV(gazoText).forEach(row => {
-    gazoMap[row["料理名"]] = row["画像ファイル名"];
-  });
+    parseCSV(gazoText).forEach(row => {
+      gazoMap[row["料理名"]] = row["画像ファイル名"];
+    });
 
-  // 日本語 UI
-  uiText = parseKeyValueCSV(await fetch("./data/ui.csv").then(r => r.text()));
-  msgText = parseKeyValueCSV(await fetch("./data/message.csv").then(r => r.text()));
-  eraList = parseEraCSV(await fetch("./data/era.csv").then(r => r.text()));
+    uiText = parseKeyValueCSV(await fetch("./data/ui.csv").then(r => r.text()));
+    msgText = parseKeyValueCSV(await fetch("./data/message.csv").then(r => r.text()));
+    eraList = parseEraCSV(await fetch("./data/era.csv").then(r => r.text()));
 
+  } catch (e) {
+    console.warn("CSV 読み込み失敗（file:// のため）");
+
+    // ★ CSV が読めなくてもゲームが動くように最低限のデータを入れる
+    eraList = [{
+      時代名: "縄文",
+      開始年: "???",
+      終了年: "???",
+      ポップアップ画像: "",
+      時代タイトル: "縄文時代",
+      時代説明: "",
+      食文化影響: ""
+    }];
+
+    uiText = {};
+    msgText = {};
+    dataList = [];
+    recipes = [];
+  }
+
+  // ★ CSV が読めなくてもここは動く
   applyUIText();
   renderHome();
   buildEraTabs();
   renderZukan();
-
-  // ★ タイトル画面が閉じた後に showEraPopup() を呼ぶため、
-  //    ここでは呼ばない（←これが重要）
 }
+
 
 // ===============================
 // CSV パーサー
@@ -223,6 +242,8 @@ function renderHome(){
   nextBtn.disabled = !isEraCleared();
   nextBtn.classList.toggle("enabled", isEraCleared());
 }
+
+//■その１ここまで
 
 // ===============================
 // 図鑑：時代タブ
