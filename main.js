@@ -66,8 +66,8 @@ async function loadCSV() {
   buildEraTabs();
   renderZukan();
 
-  // ★ 最初の時代ポップアップ
-  showEraPopup(eraList[currentEraIndex]);
+  // ★ タイトル画面が閉じた後に showEraPopup() を呼ぶため、
+  //    ここでは呼ばない（←これが重要）
 }
 
 // ===============================
@@ -406,7 +406,7 @@ document.getElementById("btn-cook").onclick = () => {
 
 // ===============================
 // ポップアップ（キュー処理）
-=============================== */
+// ===============================
 function showNextPopup() {
   if (popupActive) return;
   if (popupQueue.length === 0) return;
