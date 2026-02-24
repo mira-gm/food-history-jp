@@ -42,7 +42,7 @@ function coloredName(name, type) {
 }
 
 // ===============================
-// CSV 読み込み
+// CSV 読み込み（★ file:// でも動く安全版）
 // ===============================
 async function loadCSV() {
   try {
@@ -75,10 +75,30 @@ async function loadCSV() {
       食文化影響: ""
     }];
 
-    uiText = {};
-    msgText = {};
+    uiText = {
+      btn_material: "素材探索",
+      btn_tech: "技術研究",
+      btn_tool: "道具開発",
+      btn_cook: "料理を作る！",
+      btn_zukan: "図鑑へ",
+      btn_next: "次の時代へ"
+    };
+
+    msgText = {
+      no_more_material: "",
+      no_more_tech: "",
+      no_more_tool: "",
+      no_more_recipe: "",
+      found_material: "",
+      learn_tech: "",
+      develop_tool: "",
+      complete_recipe: "",
+      era_advance: ""
+    };
+
     dataList = [];
     recipes = [];
+    gazoMap = {};
   }
 
   // ★ CSV が読めなくてもここは動く
@@ -87,7 +107,6 @@ async function loadCSV() {
   buildEraTabs();
   renderZukan();
 }
-
 
 // ===============================
 // CSV パーサー
@@ -242,8 +261,6 @@ function renderHome(){
   nextBtn.disabled = !isEraCleared();
   nextBtn.classList.toggle("enabled", isEraCleared());
 }
-
-//■その１ここまで
 
 // ===============================
 // 図鑑：時代タブ
@@ -512,27 +529,4 @@ function showEraPopup(era) {
   document.getElementById("era-popup-title").innerHTML = coloredName(era.時代タイトル, "時代");
 
   document.getElementById("era-popup-year").textContent =
-    `（${era.開始年}〜${era.終了年}）`;
-
-  document.getElementById("era-popup-desc").textContent = era.時代説明;
-  document.getElementById("era-popup-food").textContent = era.食文化影響;
-
-  box.style.display = "flex";
-}
-
-document.getElementById("era-popup").onclick = () => {
-  document.getElementById("era-popup").style.display = "none";
-};
-
-// ===============================
-// 図鑑 → ホームへ戻る
-// ===============================
-document.getElementById("btn-zukan-home").onclick = () => {
-  document.getElementById("zukan-screen").classList.add("hidden");
-  document.getElementById("home-screen").classList.remove("hidden");
-};
-
-// ===============================
-// 起動
-// ===============================
-loadCSV();
+    `（${era.開始年}〜${era.終了年
