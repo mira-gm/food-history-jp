@@ -56,6 +56,30 @@ function eraNameByIndex(i) {
 }
 
 // ===============================
+// 時代ポップアップ（★必須）
+// ===============================
+function showEraPopup(era) {
+  const popup = document.getElementById("era-popup");
+  const img = document.getElementById("era-popup-img");
+  const title = document.getElementById("era-popup-title");
+  const year = document.getElementById("era-popup-year");
+  const desc = document.getElementById("era-popup-desc");
+  const food = document.getElementById("era-popup-food");
+
+  img.src = "./data/" + era.ポップアップ画像;
+  title.textContent = era.時代タイトル;
+  year.textContent = `${era.開始年}〜${era.終了年}`;
+  desc.textContent = era.時代説明;
+  food.textContent = era.食文化影響;
+
+  popup.style.display = "flex";
+
+  document.getElementById("era-popup-close").onclick = () => {
+    popup.style.display = "none";
+  };
+}
+
+// ===============================
 // CSV 読み込み
 // ===============================
 async function loadCSV() {
