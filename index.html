@@ -45,7 +45,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 40px 0;
-  z-index: 5000;
+  z-index: 9999;          /* ★ タイトルを最前面に */
 }
 
 #title-logo {
@@ -60,12 +60,14 @@ body {
   overflow: hidden;
   opacity: 0.7;
   padding: 10px 0;
+  pointer-events: none;   /* ★ タップを奪わない */
 }
 
 #title-scroll .scroll-inner {
   display: flex;
   width: max-content;
   animation: scroll-food 35s linear infinite;
+  pointer-events: none;   /* ★ 念のためこちらも無効化 */
 }
 
 #title-scroll img {
