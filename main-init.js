@@ -44,8 +44,7 @@ function coloredName(name, type) {
 // ===============================
 function log(text) {
   const box = document.getElementById("log");
-  box.innerHTML += text + "<br>";
-  box.scrollTop = box.scrollHeight;
+  box.innerHTML = text + "<br>" + box.innerHTML;
 }
 
 // ===============================
