@@ -34,26 +34,26 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ===============================
-  // タップで開始（eraList 読み込み待ち）
-  // ===============================
-  document.getElementById("title-screen").onclick = async () => {
+// タップで開始（eraList 読み込み待ち）
+// ===============================
+document.getElementById("title-screen").onclick = async () => {
 
-    // eraList が読み込まれるまで待機
-    while (!window.eraList || eraList.length === 0) {
-      await new Promise(r => setTimeout(r, 50));
-    }
+  // eraList が読み込まれるまで待機
+  while (eraList.length === 0) {
+    await new Promise(r => setTimeout(r, 50));
+  }
 
-    const t = document.getElementById("title-screen");
-    t.classList.add("fade-out");
+  const t = document.getElementById("title-screen");
+  t.classList.add("fade-out");
 
-    setTimeout(() => {
-      t.style.display = "none";
-      document.getElementById("home-screen").classList.remove("hidden");
+  setTimeout(() => {
+    t.style.display = "none";
+    document.getElementById("home-screen").classList.remove("hidden");
 
-      // 最初の縄文ポップアップ
-      showEraPopup(eraList[currentEraIndex]);
+    // 最初の縄文ポップアップ
+    showEraPopup(eraList[currentEraIndex]);
 
-    }, 300);
-  };
+  }, 300);
+};
 
 });
