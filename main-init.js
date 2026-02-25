@@ -25,7 +25,31 @@ let viewEra = null;
 let zukanTab = "料理";
 
 // ===============================
-// 時代名を index から取得（★これが欠けていた）
+// coloredName（★必須）
+// ===============================
+function coloredName(name, type) {
+  const classMap = {
+    "素材": "text-material",
+    "技術": "text-tech",
+    "道具": "text-tool",
+    "料理": "text-cook",
+    "時代": "text-era"
+  };
+  const cls = classMap[type] || "";
+  return `<span class="${cls}">${name}</span>`;
+}
+
+// ===============================
+// log（★必須）
+// ===============================
+function log(text) {
+  const box = document.getElementById("log");
+  box.innerHTML += text + "<br>";
+  box.scrollTop = box.scrollHeight;
+}
+
+// ===============================
+// 時代名を index から取得
 // ===============================
 function eraNameByIndex(i) {
   return eraList[i]?.時代名 ?? "？？？";
