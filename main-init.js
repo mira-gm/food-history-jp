@@ -78,6 +78,14 @@ function showEraPopup(era) {
   };
 }
 
+// ★ 追加：背景クリックでも閉じる
+popup.onclick = () => {
+  popup.style.display = "none";
+};
+
+
+
+
 // ===============================
 // CSV 読み込み
 // ===============================
