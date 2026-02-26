@@ -17,7 +17,6 @@ body {
 }
 
 /* ゲーム画面の最大幅をスマホサイズに固定 */
-#title-screen,
 #home-screen,
 #zukan-screen {
   max-width: 480px;
@@ -33,6 +32,11 @@ body {
 /* ============================
    タイトル画面
 ============================ */
+#title-screen > * {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 #title-screen {
   position: fixed;
   top: 0; left: 0;

@@ -210,11 +210,15 @@ function getNameById(id) {
 // ポップアップ閉じる
 // ===============================
 document.getElementById("popup").onclick = () => {
-  // ★ 追加：非表示なら何もしない
-  if (document.getElementById("popup").style.display === "none") return;
-  document.getElementById("popup").style.display = "none";
+  const popup = document.getElementById("popup");
+
+  // ★ 追加：実際に表示されているかどうかを getComputedStyle で判定
+  if (window.getComputedStyle(popup).display === "none") return;
+  popup.style.display = "none";
   popupActive = false;
+
   if (popupQueue.length > 0) {
     showNextPopup();
   }
+
 };
