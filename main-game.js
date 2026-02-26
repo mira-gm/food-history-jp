@@ -210,7 +210,7 @@ function getNameById(id) {
 // ポップアップ閉じる
 // ===============================
 document.getElementById("popup").onclick = () => {
-  // ★ 追加：非表示なら何もしない（空欄ポップアップ防止）
+  // ★ 追加：非表示なら何もしない
   if (document.getElementById("popup").style.display === "none") return;
   document.getElementById("popup").style.display = "none";
   popupActive = false;
