@@ -92,18 +92,3 @@ document.getElementById("btn-next-era").onclick = () => {
   showEraPopup(eraList[currentEraIndex]);
 };
 
-// ===============================
-// 図鑑タブ切り替え
-// ===============================
-document.querySelectorAll("#zukan-tabs .info-tab").forEach(tab => {
-  tab.onclick = () => {
-    // active の付け替え
-    document.querySelectorAll("#zukan-tabs .info-tab")
-      .forEach(t => t.classList.remove("active"));
-    tab.classList.add("active");
-
-    // 図鑑の内容を更新
-    renderZukan();
-  };
-});
-

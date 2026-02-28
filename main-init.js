@@ -21,9 +21,13 @@ let popupQueue = [];
 let popupActive = false;
 
 let currentEraIndex = 0;
+
+// ★ 図鑑用：現在の時代（null なら currentEraIndex を使う）
 let viewEra = null;
+
+// ★ 図鑑用：分類タブ（料理 / 素材 / 技術 / 道具）
 let zukanTab = "料理";
-let zukanEraIndex = 0; // 図鑑で選択中の時代（初期は縄文）
+
 
 // ===============================
 // coloredName（★必須）
@@ -40,6 +44,7 @@ function coloredName(name, type) {
   return `<span class="${cls}">${name}</span>`;
 }
 
+
 // ===============================
 // log（★必須）
 // ===============================
@@ -48,15 +53,17 @@ function log(text) {
   box.innerHTML = text + "<br>" + box.innerHTML;
 }
 
+
 // ===============================
-// 時代名を index から取得
+// index → 時代名
 // ===============================
 function eraNameByIndex(i) {
   return eraList[i]?.時代名 ?? "？？？";
 }
 
+
 // ===============================
-// 時代ポップアップ（★必須）
+// 時代ポップアップ
 // ===============================
 function showEraPopup(era) {
   const popup = document.getElementById("era-popup");
@@ -79,12 +86,10 @@ function showEraPopup(era) {
   };
 }
 
-// ★ 追加：背景クリックでも閉じる
-popup.onclick = () => {
-  popup.style.display = "none";
+// 背景クリックでも閉じる
+document.getElementById("era-popup").onclick = () => {
+  document.getElementById("era-popup").style.display = "none";
 };
-
-
 
 
 // ===============================
@@ -141,6 +146,7 @@ async function loadCSV() {
   renderZukan();
 }
 
+
 // ===============================
 // CSV パーサー
 // ===============================
@@ -183,6 +189,7 @@ function parseEraCSV(text){
   });
 }
 
+
 // ===============================
 // UI テキスト適用
 // ===============================
@@ -194,6 +201,7 @@ function applyUIText() {
   document.getElementById("btn-go-zukan").textContent = uiText["btn_zukan"];
   document.getElementById("btn-next-era").textContent = uiText["btn_next"];
 }
+
 
 // ===============================
 // ホーム画面描画
@@ -225,8 +233,9 @@ function renderHome(){
   nextBtn.classList.toggle("enabled", isEraCleared());
 }
 
+
 // ===============================
-// 図鑑タブ生成
+// 図鑑：時代タブ（旧仕様・安定版）
 // ===============================
 function buildEraTabs(){
   const tabs = document.getElementById("era-tabs");
@@ -249,14 +258,16 @@ function buildEraTabs(){
   });
 }
 
+
 // ===============================
-// 図鑑描画
+// 図鑑：一覧（旧仕様・安定版）
 // ===============================
 function renderZukan(){
   const eraName = viewEra || eraNameByIndex(currentEraIndex);
   const box = document.getElementById("zukan-info-box");
   box.innerHTML = "";
 
+  // ★ 料理タブ（押せる）
   if (zukanTab === "料理") {
     const eraRecipes = recipes.filter(r => r.時代 === eraName);
     eraRecipes.forEach(r => {
@@ -275,6 +286,7 @@ function renderZukan(){
     return;
   }
 
+  // ★ 素材・技術・道具（押せない）
   const eraItems = dataList.filter(d => d.分類 === zukanTab && d.時代 === eraName);
   const ownedSet = owned[zukanTab];
 
@@ -288,6 +300,7 @@ function renderZukan(){
     box.appendChild(div);
   });
 }
+
 
 // ===============================
 // 起動
