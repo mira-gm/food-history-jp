@@ -63,6 +63,10 @@ document.getElementById("title-screen").onclick = async () => {
 document.getElementById("btn-go-zukan").onclick = () => {
   document.getElementById("home-screen").classList.add("hidden");
   document.getElementById("zukan-screen").classList.remove("hidden");
+
+  viewEra = null;        // currentEraIndex を使うモードに戻す
+  buildEraTabs();        // タブの active を現在の時代に張り直す
+  renderZukan();         // 一覧も現在の時代で描画し直す
 };
 
 // ===============================
@@ -103,20 +107,3 @@ document.querySelectorAll("#zukan-tabs .info-tab").forEach(tab => {
   };
 });
 
-// ===============================
-// 図鑑：時代タブ切り替え
-// ===============================
-document.querySelectorAll("#era-tabs .era-tab").forEach((tab, index) => {
-  tab.onclick = () => {
-    // active の付け替え
-    document.querySelectorAll("#era-tabs .era-tab")
-      .forEach(t => t.classList.remove("active"));
-    tab.classList.add("active");
-
-    // 図鑑専用の時代インデックスを更新
-    zukanEraIndex = index;
-
-    // 図鑑を再描画
-    renderZukan();
-  };
-});
