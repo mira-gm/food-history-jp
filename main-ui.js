@@ -102,3 +102,21 @@ document.querySelectorAll("#zukan-tabs .info-tab").forEach(tab => {
     renderZukan();
   };
 });
+
+// ===============================
+// 図鑑：時代タブ切り替え
+// ===============================
+document.querySelectorAll("#era-tabs .era-tab").forEach((tab, index) => {
+  tab.onclick = () => {
+    // active の付け替え
+    document.querySelectorAll("#era-tabs .era-tab")
+      .forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+
+    // 図鑑専用の時代インデックスを更新
+    zukanEraIndex = index;
+
+    // 図鑑を再描画
+    renderZukan();
+  };
+});

@@ -234,7 +234,7 @@ function renderZukan() {
   const type = document.querySelector("#zukan-tabs .info-tab.active").dataset.type;
 
   // ★ 現在の時代
-  const era = eraNameByIndex(currentEraIndex);
+  const era = eraNameByIndex(zukanEraIndex);
 
   let items = [];
 

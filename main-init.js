@@ -23,6 +23,7 @@ let popupActive = false;
 let currentEraIndex = 0;
 let viewEra = null;
 let zukanTab = "料理";
+let zukanEraIndex = 0; // 図鑑で選択中の時代（初期は縄文）
 
 // ===============================
 // coloredName（★必須）
