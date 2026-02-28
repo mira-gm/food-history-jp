@@ -92,3 +92,22 @@ document.getElementById("btn-next-era").onclick = () => {
   showEraPopup(eraList[currentEraIndex]);
 };
 
+// ===============================
+// 図鑑：分類タブ（旧仕様）
+// ===============================
+document.querySelectorAll("#zukan-tabs .info-tab").forEach(tab => {
+  tab.onclick = () => {
+    // active の付け替え
+    document.querySelectorAll("#zukan-tabs .info-tab")
+      .forEach(t => t.classList.remove("active"));
+
+    tab.classList.add("active");
+
+    // 図鑑の分類を更新
+    zukanTab = tab.dataset.type;
+
+    // 図鑑を再描画
+    renderZukan();
+  };
+});
+
