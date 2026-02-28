@@ -222,3 +222,34 @@ document.getElementById("popup").onclick = () => {
   }
 
 };
+
+// ===============================
+// 図鑑の表示更新
+// ===============================
+function renderZukan() {
+  const box = document.getElementById("zukan-info-box");
+  box.innerHTML = "";
+
+  // ★ 現在 active のタブを取得
+  const type = document.querySelector("#zukan-tabs .info-tab.active").dataset.type;
+
+  // ★ 現在の時代
+  const era = eraNameByIndex(currentEraIndex);
+
+  // ★ 該当する項目を抽出
+  const items = dataList.filter(d => d.分類 === type && d.時代 === era);
+
+  // ★ 表示
+  items.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "zukan-item";
+    div.textContent = item.name;
+
+    // 料理タブだけ「作れる料理」マークを付ける
+    if (type === "料理" && recipes.some(r => r.料理 === item.name && completed.has(item.name))) {
+      div.classList.add("cookable");
+    }
+
+    box.appendChild(div);
+  });
+}
