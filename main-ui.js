@@ -55,5 +55,20 @@ document.getElementById("title-screen").onclick = async () => {
 
   }, 300);
 };
-
 });
+
+// ===============================
+// 図鑑へボタン
+// ===============================
+document.getElementById("btn-go-zukan").onclick = () => {
+  document.getElementById("home-screen").classList.add("hidden");
+  document.getElementById("zukan-screen").classList.remove("hidden");
+};
+
+// ===============================
+// 図鑑 → ホームへ戻る
+// ===============================
+document.getElementById("btn-zukan-home").onclick = () => {
+  document.getElementById("zukan-screen").classList.add("hidden");
+  document.getElementById("home-screen").classList.remove("hidden");
+};
