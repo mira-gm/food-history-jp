@@ -224,29 +224,52 @@ document.getElementById("popup").onclick = () => {
 };
 
 // ===============================
-// 図鑑の表示更新
+// 図鑑の表示更新（完全版）
 // ===============================
 function renderZukan() {
   const box = document.getElementById("zukan-info-box");
   box.innerHTML = "";
 
-  // ★ 現在 active のタブを取得
+  // ★ 現在 active の分類タブ
   const type = document.querySelector("#zukan-tabs .info-tab.active").dataset.type;
 
   // ★ 現在の時代
   const era = eraNameByIndex(currentEraIndex);
 
-  // ★ 該当する項目を抽出
-  const items = dataList.filter(d => d.分類 === type && d.時代 === era);
+  let items = [];
 
-  // ★ 表示
+  // ★ 分類ごとにデータを取得
+  if (type === "料理") {
+    // 料理は recipes から取得
+    items = recipes
+      .filter(r => r.時代 === era)
+      .map(r => ({
+        name: r.料理,
+        unlocked: completed.has(r.料理)
+      }));
+  } else {
+    // 素材・技術・道具は dataList から取得
+    items = dataList
+      .filter(d => d.分類 === type && d.時代 === era)
+      .map(d => ({
+        name: d.name,
+        unlocked:
+          type === "素材" ? owned.素材.has(d.id) :
+          type === "技術" ? owned.技術.has(d.id) :
+          owned.道具.has(d.id)
+      }));
+  }
+
+  // ★ 表示処理
   items.forEach(item => {
     const div = document.createElement("div");
     div.className = "zukan-item";
-    div.textContent = item.name;
 
-    // 料理タブだけ「作れる料理」マークを付ける
-    if (type === "料理" && recipes.some(r => r.料理 === item.name && completed.has(item.name))) {
+    // 未解放は ??? 表示
+    div.textContent = item.unlocked ? item.name : "???";
+
+    // 料理タブで「解放済み料理」は cookable マーク
+    if (type === "料理" && item.unlocked) {
       div.classList.add("cookable");
     }
 
