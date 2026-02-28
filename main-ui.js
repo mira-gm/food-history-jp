@@ -72,3 +72,18 @@ document.getElementById("btn-zukan-home").onclick = () => {
   document.getElementById("zukan-screen").classList.add("hidden");
   document.getElementById("home-screen").classList.remove("hidden");
 };
+
+// ===============================
+// 次の時代へ
+// ===============================
+document.getElementById("btn-next-era").onclick = () => {
+  // 時代を進める
+  currentEraIndex++;
+
+  // ホーム画面を更新
+  renderHome();
+  renderZukan();
+
+  // 時代ポップアップを表示
+  showEraPopup(eraList[currentEraIndex]);
+};
