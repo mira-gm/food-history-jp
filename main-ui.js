@@ -152,37 +152,69 @@ function fadeOutToClearScreen() {
 // ===============================
 // クリア画面：一覧表示
 // ===============================
-function renderClearScreen() {
+function renderClearScreen(selectedEra = "縄文") {
   const box = document.getElementById("clear-info-box");
 
-  // デフォルトは料理タブ
   const type = document.querySelector("#clear-tabs .info-tab.active").dataset.type;
 
-  const list = {
-    "料理": recipes.map(r => r.料理),
-    "素材": dataList.filter(d => d.分類 === "素材").map(d => d.name),
-    "技術": dataList.filter(d => d.分類 === "技術").map(d => d.name),
-    "道具": dataList.filter(d => d.分類 === "道具").map(d => d.name)
-  }[type];
+  // 選択された時代（null なら全時代）
+  const eraName = selectedEra;
 
-  box.innerHTML = list.map(name => `
-    <div class="zukan-item">${name}</div>
+  let list = [];
+
+  if (type === "料理") {
+    const filtered = eraName
+      ? recipes.filter(r => r.時代 === eraName)
+      : recipes;
+
+    list = filtered.map(r => ({
+      name: r.料理,
+      recipe: r
+    }));
+  } else {
+    const filtered = eraName
+      ? dataList.filter(d => d.分類 === type && d.時代 === eraName)
+      : dataList.filter(d => d.分類 === type);
+
+    list = filtered.map(d => ({
+      name: d.name,
+      recipe: null
+    }));
+  }
+
+  box.innerHTML = list.map(item => `
+    <div class="zukan-item" data-name="${item.name}">
+      ${item.name}
+    </div>
   `).join("");
 
-  renderClearEraTabs();
+  // ★ 料理クリック → ポップアップ
+  box.querySelectorAll(".zukan-item").forEach(div => {
+    div.onclick = () => {
+      if (type !== "料理") return;
+
+      const recipe = recipes.find(r => r.料理 === div.dataset.name);
+      if (recipe) showPopupForRecipe(recipe);
+    };
+  });
+
+  renderClearEraTabs(selectedEra);
 }
 
 // ===============================
 // クリア画面：時代タブ
 // ===============================
-function renderClearEraTabs() {
+function renderClearEraTabs(selectedEra = "縄文") {
   const tabs = document.getElementById("clear-era-tabs");
   tabs.innerHTML = "";
 
   eraList.forEach(e => {
     const div = document.createElement("div");
     div.textContent = e.時代名;
-    div.className = "era-tab";
+
+    // ★ 初期 active を縄文にする
+    div.className = "era-tab" + (e.時代名 === selectedEra ? " active" : "");
+
     tabs.appendChild(div);
   });
 }
@@ -199,6 +231,21 @@ document.querySelectorAll("#clear-tabs .info-tab").forEach(tab => {
     renderClearScreen();
   };
 });
+
+// クリア画面：時代タブ切り替え
+document.getElementById("clear-era-tabs").onclick = (e) => {
+  if (!e.target.classList.contains("era-tab")) return;
+
+  // active の付け替え
+  document.querySelectorAll("#clear-era-tabs .era-tab")
+    .forEach(t => t.classList.remove("active"));
+  e.target.classList.add("active");
+
+  // 選択された時代名
+  const eraName = e.target.textContent;
+
+  renderClearScreen(eraName);
+};
 
 // ===============================
 // クリア画面：タイトルへ戻る
