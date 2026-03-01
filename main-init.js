@@ -73,19 +73,24 @@ function showEraPopup(era) {
   const desc = document.getElementById("era-popup-desc");
   const food = document.getElementById("era-popup-food");
 
+  // いったん非表示のまま中身をセット
+  popup.style.display = "none";
+
   img.src = "./data/" + era.ポップアップ画像;
   title.textContent = era.時代タイトル;
   year.textContent = `${era.開始年}〜${era.終了年}`;
   desc.textContent = era.時代説明;
   food.textContent = era.食文化影響;
 
-  popup.style.display = "flex";
+  // 画像の読み込み完了後に表示（チラ見え防止）
+  img.onload = () => {
+    popup.style.display = "flex";
+  };
 
   document.getElementById("era-popup-close").onclick = () => {
     popup.style.display = "none";
   };
 }
-
 // 背景クリックでも閉じる
 document.getElementById("era-popup").onclick = () => {
   document.getElementById("era-popup").style.display = "none";
