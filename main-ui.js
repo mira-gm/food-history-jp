@@ -189,7 +189,7 @@ function renderClearScreen() {
 // ===============================
 // クリア画面：時代タブ
 // ===============================
-function renderClearEraTabs(selectedEra = "縄文") {
+function renderClearEraTabs() {
   const tabs = document.getElementById("clear-era-tabs");
   tabs.innerHTML = "";
 
@@ -197,8 +197,8 @@ function renderClearEraTabs(selectedEra = "縄文") {
     const div = document.createElement("div");
     div.textContent = e.時代名;
 
-    // ★ 初期 active を縄文にする
-    div.className = "era-tab" + (e.時代名 === selectedEra ? " active" : "");
+    // ★ clearViewEra を使って active を決める
+    div.className = "era-tab" + (e.時代名 === clearViewEra ? " active" : "");
 
     tabs.appendChild(div);
   });
