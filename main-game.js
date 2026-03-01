@@ -150,7 +150,7 @@ document.getElementById("btn-cook").onclick = () => {
   available.forEach(r => {
     completed.add(r.料理);
 
-    log(`${msgText["complete_recipe"]}${coloredName(r.料理, "料理")}<br> → ${r.メッセージ}`);
+    log(`${msgText["complete_recipe"]}${coloredName(r.料理, "料理")}<br> ${r.メッセージ}`);
 
     popupQueue.push(r);
   });
