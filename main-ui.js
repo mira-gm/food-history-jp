@@ -84,13 +84,22 @@ document.getElementById("btn-next-era").onclick = () => {
   // 時代を進める
   currentEraIndex++;
 
+  const era = eraList[currentEraIndex];
+
+  // ★ 時代進行ログを追加（タイトル＋説明の2行）
+  log(
+    `${coloredName(`時代進行：${era.時代名}時代`, "時代")}<br>${era.食文化影響}`
+  );
+
   // ホーム画面を更新
   renderHome();
   renderZukan();
 
   // 時代ポップアップを表示
-  showEraPopup(eraList[currentEraIndex]);
+  showEraPopup(era);
 };
+
+
 
 // ===============================
 // 図鑑：分類タブ（旧仕様）
