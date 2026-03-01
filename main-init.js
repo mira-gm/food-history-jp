@@ -51,16 +51,15 @@ function coloredName(name, type) {
 function log(text) {
   const box = document.getElementById("log");
 
-  // 「タイトル<br>説明」の形式で来る前提で分割
   const [title, detail] = text.split("<br>");
 
-  // タイトル行
-  box.innerHTML = `<div>${title}</div>` + box.innerHTML;
+  // タイトル＋説明をひとつのブロックにまとめる
+  const block =
+    `<div>${title}</div>` +
+    (detail ? `<div class="log-detail">→ ${detail}</div>` : "");
 
-  // 説明行（→ を付ける）
-  if (detail) {
-    box.innerHTML = `<div class="log-detail">→ ${detail}</div>` + box.innerHTML;
-  }
+  // まとめて上に積む
+  box.innerHTML = block + "<br>" + box.innerHTML;
 }
 
 
