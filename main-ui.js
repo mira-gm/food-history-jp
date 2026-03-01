@@ -234,10 +234,16 @@ document.getElementById("clear-era-tabs").onclick = (e) => {
 };
 
 // ===============================
-// クリア画面：タイトルへ戻る
+// クリア画面：タイトルへ戻る（フェードアウト付き）
 // ===============================
 document.getElementById("btn-clear-title").onclick = () => {
-  location.reload(); // タイトル画面へ戻る
+  const body = document.body;
+  body.style.transition = "opacity 1.5s";
+  body.style.opacity = "0";
+
+  setTimeout(() => {
+    location.reload();  // フェードアウト後にタイトルへ
+  }, 1500);
 };
 
 
