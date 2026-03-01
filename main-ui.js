@@ -86,19 +86,19 @@ document.getElementById("btn-next-era").onclick = () => {
 
   const era = eraList[currentEraIndex];
 
-  // ★ 時代進行ログを追加（タイトル＋説明の2行）
-  log(
-    `${coloredName(`時代進行：${era.時代名}時代`, "時代")}<br>${era.食文化影響}`
-  );
+  // 食文化影響が undefined / 空 の場合は 2 行目を出さない
+  const detail = era.食文化影響 ?? "";
+  const text =
+    detail
+      ? `${coloredName(`時代進行：${era.時代名}時代`, "時代")}<br>${detail}`
+      : `${coloredName(`時代進行：${era.時代名}時代`, "時代")}`;
 
-  // ホーム画面を更新
+  log(text);
+
   renderHome();
   renderZukan();
-
-  // 時代ポップアップを表示
   showEraPopup(era);
 };
-
 
 
 // ===============================
