@@ -419,3 +419,85 @@ body {
   margin: 0 auto;
 }
 
+/* ============================
+   ゲームクリア画面
+============================ */
+#clear-screen {
+  background: #0a1a2f; /* 藍色 */
+  color: #fff;
+  padding: 10px;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+#clear-title {
+  font-size: 28px;
+  color: #ffd700; /* 金色 */
+  text-align: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+#clear-info-box {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  border: 1px solid #444;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  background: #111;
+}
+
+#clear-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+#clear-tabs .info-tab {
+  flex: 1;
+  padding: 10px;
+  background: #333;
+  border-radius: 6px;
+  text-align: center;
+}
+
+#clear-tabs .info-tab.active {
+  background: #ffcc66;
+  color: #000;
+}
+
+#clear-era-tabs {
+  display: flex;
+  overflow-x: auto;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+#clear-era-tabs .era-tab {
+  padding: 6px 10px;
+  background: #333;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+#clear-era-tabs .era-tab.active {
+  background: #ffcc66;
+  color: #000;
+}
+
+#btn-clear-title {
+  background: #ff3333;
+  color: #fff;
+  padding: 22px;
+  font-size: 22px;
+  border-radius: 12px;
+  border: none;
+  flex-shrink: 0;
+  margin-top: 10px;
+}

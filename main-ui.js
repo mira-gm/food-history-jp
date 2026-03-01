@@ -81,12 +81,17 @@ document.getElementById("btn-zukan-home").onclick = () => {
 // 次の時代へ
 // ===============================
 document.getElementById("btn-next-era").onclick = () => {
-  // 時代を進める
+
+  // ★ ゲームクリア判定（最終時代＋全要素解放）
+  if (isGameCleared()) {
+    fadeOutToClearScreen();
+    return;
+  }
+
+  // ★ 通常の時代進行
   currentEraIndex++;
 
   const era = eraList[currentEraIndex];
-
-  // 食文化影響が undefined / 空 の場合は 2 行目を出さない
   const detail = era.時代説明;
 
   const text =
@@ -100,7 +105,6 @@ document.getElementById("btn-next-era").onclick = () => {
   renderZukan();
   showEraPopup(era);
 };
-
 
 // ===============================
 // 図鑑：分類タブ（旧仕様）
@@ -121,3 +125,84 @@ document.querySelectorAll("#zukan-tabs .info-tab").forEach(tab => {
   };
 });
 
+// ===============================
+// ゲームクリア画面への遷移
+// ===============================
+function fadeOutToClearScreen() {
+  const body = document.body;
+  body.style.transition = "opacity 1.5s";
+  body.style.opacity = "0";
+
+  setTimeout(() => {
+    // すべての画面を非表示
+    document.getElementById("title-screen").classList.add("hidden");
+    document.getElementById("home-screen").classList.add("hidden");
+    document.getElementById("zukan-screen").classList.add("hidden");
+
+    // クリア画面を表示
+    document.getElementById("clear-screen").classList.remove("hidden");
+
+    // フェードイン
+    body.style.opacity = "1";
+
+    renderClearScreen();
+  }, 1500);
+}
+
+// ===============================
+// クリア画面：一覧表示
+// ===============================
+function renderClearScreen() {
+  const box = document.getElementById("clear-info-box");
+
+  // デフォルトは料理タブ
+  const type = document.querySelector("#clear-tabs .info-tab.active").dataset.type;
+
+  const list = {
+    "料理": recipes.map(r => r.料理),
+    "素材": dataList.filter(d => d.分類 === "素材").map(d => d.name),
+    "技術": dataList.filter(d => d.分類 === "技術").map(d => d.name),
+    "道具": dataList.filter(d => d.分類 === "道具").map(d => d.name)
+  }[type];
+
+  box.innerHTML = list.map(name => `
+    <div class="zukan-item">${name}</div>
+  `).join("");
+
+  renderClearEraTabs();
+}
+
+// ===============================
+// クリア画面：時代タブ
+// ===============================
+function renderClearEraTabs() {
+  const tabs = document.getElementById("clear-era-tabs");
+  tabs.innerHTML = "";
+
+  eraList.forEach(e => {
+    const div = document.createElement("div");
+    div.textContent = e.時代名;
+    div.className = "era-tab";
+    tabs.appendChild(div);
+  });
+}
+
+// ===============================
+// クリア画面：分類タブ切り替え
+// ===============================
+document.querySelectorAll("#clear-tabs .info-tab").forEach(tab => {
+  tab.onclick = () => {
+    document.querySelectorAll("#clear-tabs .info-tab")
+      .forEach(t => t.classList.remove("active"));
+
+    tab.classList.add("active");
+    renderClearScreen();
+  };
+});
+
+// ===============================
+// クリア画面：タイトルへ戻る
+// ===============================
+document.getElementById("btn-clear-title").onclick = () => {
+  location.reload(); // タイトル画面へ戻る
+};

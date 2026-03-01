@@ -150,7 +150,7 @@ document.getElementById("btn-cook").onclick = () => {
   available.forEach(r => {
     completed.add(r.料理);
 
-    log(`${msgText["complete_recipe"]}${coloredName(r.料理, "料理")}<br> ${r.メッセージ}`);
+    log(`${msgText["complete_recipe"]}${coloredName(r.料理, "料理")}<br>${r.メッセージ}`);
 
     popupQueue.push(r);
   });
@@ -222,3 +222,27 @@ document.getElementById("popup").onclick = () => {
   }
 
 };
+
+// ===============================
+// ゲームクリア判定（全時代・全要素）
+// ===============================
+function isGameCleared() {
+  // 最終時代に到達しているか
+  const lastEraReached = currentEraIndex >= eraList.length - 1;
+
+  // 全素材・技術・道具が解放されているか
+  const allMaterial = dataList.filter(d => d.分類 === "素材")
+    .every(d => owned.素材.has(d.id));
+
+  const allTech = dataList.filter(d => d.分類 === "技術")
+    .every(d => owned.技術.has(d.id));
+
+  const allTool = dataList.filter(d => d.分類 === "道具")
+    .every(d => owned.道具.has(d.id));
+
+  // 全料理が完成しているか
+  const allDish = recipes.every(r => completed.has(r.料理));
+
+  return lastEraReached && allMaterial && allTech && allTool && allDish;
+}
+
