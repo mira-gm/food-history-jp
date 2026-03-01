@@ -1,0 +1,424 @@
+<style>
+/* ============================
+   PC で巨大化しないように中央固定
+============================ */
+body {
+  font-family: sans-serif;
+  margin: 0;
+  background: #000;
+  color: #fff;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+/* ← ここに追加！ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ゲーム画面の最大幅をスマホサイズに固定 */
+#home-screen,
+#zukan-screen {
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;   /* ★ これを追加 */
+}
+
+/* 画面切り替え */
+.hidden {
+  display: none !important;
+}
+
+/* ============================
+   タイトル画面
+============================ */
+#title-screen > * {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#title-screen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 0;
+  z-index: 9999;
+}
+
+#title-logo {
+  width: 80%;
+  max-width: 360px;
+  margin-top: 20px;
+}
+
+/* 横スクロール */
+#title-scroll {
+  width: 100%;
+  overflow: hidden;
+  opacity: 0.7;
+  padding: 10px 0;
+  pointer-events: none;   /* ★ タップを奪わない */
+}
+
+#title-scroll .scroll-inner {
+  display: flex;
+  width: max-content;
+  animation: scroll-food 35s linear infinite;
+  pointer-events: none;   /* ★ 念のためこちらも無効化 */
+}
+
+#title-scroll img {
+  width: 160px;
+  height: 110px;
+  object-fit: cover;
+  margin: 0 6px;
+  border-radius: 6px;
+}
+
+@keyframes scroll-food {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* TAP TO START */
+#tap-to-start {
+  font-size: 20px;
+  margin-bottom: 100px;
+  animation: blink 1.2s infinite;
+  color: #fff;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.2; }
+  100% { opacity: 1; }
+}
+
+/* フェードアウト */
+.fade-out {
+  animation: fadeOut 0.3s forwards;
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; }
+}
+
+/* ============================
+   ホーム画面
+============================ */
+#home-screen {
+  padding: 10px;
+  text-align: center;
+  min-height: 100dvh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+#era-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+#era-text {
+  text-align: left;
+  font-size: 22px;
+  line-height: 1.4;
+  flex: 1;
+}
+
+#era-image {
+  width: 40%;
+  max-width: 180px;
+  border-radius: 8px;
+}
+
+#log-box {
+  background: #fff;
+  color: #000;
+  padding: 10px;
+  border-radius: 8px;
+  height: 28vh;
+  overflow-y: auto;
+  margin: 10px 0;
+  text-align: left;
+}
+
+.action-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.action-row button {
+  flex: 1;
+  margin: 0 5px;
+  padding: 14px 0;
+  font-size: 16px;
+  border: none;
+  color: #fff;
+  border-radius: 10px;
+}
+
+/* ============================
+   ホーム画面ボタン色
+============================ */
+#btn-material { background: #2e8b57; }
+#btn-tech     { background: #2563eb; }
+#btn-tool     { background: #d97706; }
+#btn-go-zukan { background: #6d28d9; }
+
+#btn-cook {
+  background: #666;
+  padding: 22px 0;
+  font-size: 20px;
+  border-radius: 12px;
+}
+
+#btn-next-era {
+  background: #666;
+}
+
+/* ============================
+   “ぼわっと光る”アニメーション
+============================ */
+@keyframes pulse-red {
+  0% {
+    background: #ff2d2d;
+    box-shadow: 0 0 10px rgba(255, 50, 50, 0.6);
+    transform: scale(1.00);
+  }
+  50% {
+    background: #ff6666;
+    box-shadow: 0 0 28px rgba(255, 120, 120, 1);
+    transform: scale(1.05);
+  }
+  100% {
+    background: #ff2d2d;
+    box-shadow: 0 0 10px rgba(255, 50, 50, 0.6);
+    transform: scale(1.00);
+  }
+}
+
+#btn-cook.enabled,
+#btn-next-era.enabled,
+#btn-zukan-home {
+  animation: pulse-red 1.4s infinite ease-in-out;
+  color: #fff;
+}
+
+/* 図鑑ホームへ戻るボタン */
+#btn-zukan-home {
+  background: #ff2d2d;
+  padding: 22px;
+  font-size: 22px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+/* ============================
+   図鑑画面
+============================ */
+#zukan-screen {
+  padding: 10px;
+  background: #000;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+#zukan-info-box {
+  height: 55vh;        /* ← 追加：高さを固定 */
+  overflow-y: auto;
+  border: 1px solid #444;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.zukan-item {
+  padding: 12px;
+  border-bottom: 1px solid #555;
+  background: #222;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.zukan-item.cookable::after {
+  content: "›";
+  font-size: 20px;
+  color: #888;
+}
+
+.zukan-item.disabled {
+  opacity: 0.6;
+}
+
+#zukan-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.info-tab {
+  flex: 1;
+  padding: 10px;
+  background: #333;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.info-tab.active {
+  background: #ffcc66;
+  color: #000;
+}
+
+#era-tabs {
+  display: flex;
+  overflow-x: auto;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.era-tab {
+  padding: 6px 10px;
+  background: #333;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.era-tab.active {
+  background: #ffcc66;
+  color: #000;
+}
+
+/* ============================
+   ログ用カラー
+============================ */
+.text-material { color: #2ecc71; }
+.text-tech     { color: #3498db; }
+.text-tool     { color: #c97a3d; }
+.text-cook     { color: #e74c3c; }
+.text-era      { color: #f1c40f; }
+
+/* ============================
+   料理ポップアップ
+============================ */
+#popup {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0,0,0,0.6);
+  display: none;              /* ← 初期状態は非表示のまま */
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+#popup-content {
+  background: white;
+  padding: 20px;
+  width: 80%;
+  max-width: 350px;
+  border-radius: 10px;
+  text-align: center;
+  color: #000;
+}
+
+#popup-img {
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+/* ============================
+   時代ポップアップ
+============================ */
+#era-popup {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0,0,0,0.6);
+  display: none;              /* 初期は非表示 */
+  display: flex;              /* 表示時は flex で中央寄せ */
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+
+#era-popup-content {
+  background: white;
+  padding: 20px;
+  width: 85%;
+  max-width: 380px;
+  border-radius: 10px;
+  text-align: center;
+  color: #000;
+}
+
+#era-popup-img {
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+#era-popup-title {
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+#era-popup-year {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+#popup-close,
+#era-popup-close {
+  background: #ff3333;
+  color: #fff;
+  padding: 18px 0;
+  width: 100%;
+  font-size: 20px;
+  border: none;
+  border-radius: 12px;
+  margin-top: 12px;
+}
+
+/* ポップアップを画面中央に固定 */
+#popup,
+#era-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 中身を中央に寄せる */
+#popup-content,
+#era-popup-content {
+  margin: 0 auto;
+}
+
+
+</style>
