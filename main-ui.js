@@ -87,7 +87,8 @@ document.getElementById("btn-next-era").onclick = () => {
   const era = eraList[currentEraIndex];
 
   // 食文化影響が undefined / 空 の場合は 2 行目を出さない
-  const detail = era.食文化影響 ?? "";
+  const detail = era.時代説明;
+
   const text =
     detail
       ? `${coloredName(`時代進行：${era.時代名}時代`, "時代")}<br>${detail}`
