@@ -18,12 +18,20 @@ body {
   overflow-y: hidden;
 }
 
+/* ← ここに追加！ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 /* ゲーム画面の最大幅をスマホサイズに固定 */
 #home-screen,
 #zukan-screen {
   max-width: 480px;
   width: 100%;
   margin: 0 auto;
+  box-sizing: border-box;   /* ★ これを追加 */
 }
 
 /* 画面切り替え */
