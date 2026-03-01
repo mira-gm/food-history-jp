@@ -57,16 +57,19 @@ document.getElementById("title-screen").onclick = async () => {
 };
 });
 
+// ★ クリア画面用：現在選択中の時代
+let clearViewEra = "縄文";
+
 // ===============================
 // 図鑑へボタン
 // ===============================
-document.getElementById("btn-go-zukan").onclick = () => {
+  document.getElementById("btn-go-zukan").onclick = () => {
   document.getElementById("home-screen").classList.add("hidden");
   document.getElementById("zukan-screen").classList.remove("hidden");
 
-  viewEra = null;        // currentEraIndex を使うモードに戻す
-  buildEraTabs();        // タブの active を現在の時代に張り直す
-  renderZukan();         // 一覧も現在の時代で描画し直す
+  viewEra = null;
+  buildEraTabs();
+  renderZukan();
 };
 
 // ===============================
