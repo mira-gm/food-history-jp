@@ -443,8 +443,7 @@ body {
 }
 
 #clear-info-box {
-  flex: 1;
-  min-height: 0;
+  height: 55vh;        /* ← 図鑑と同じ高さに固定 */
   overflow-y: auto;
   border: 1px solid #444;
   padding: 10px;

@@ -206,3 +206,25 @@ document.querySelectorAll("#clear-tabs .info-tab").forEach(tab => {
 document.getElementById("btn-clear-title").onclick = () => {
   location.reload(); // タイトル画面へ戻る
 };
+
+
+// ===============================
+// デバッグ：全解放モード
+// ===============================
+document.addEventListener("keydown", (e) => {
+  // F2キーで全解放
+  if (e.key === "F2") {
+    dataList.forEach(d => {
+      if (d.分類 === "素材") owned.素材.add(d.id);
+      if (d.分類 === "技術") owned.技術.add(d.id);
+      if (d.分類 === "道具") owned.道具.add(d.id);
+    });
+
+    recipes.forEach(r => completed.add(r.料理));
+
+    alert("デバッグ：全素材・技術・道具・料理を解放しました！");
+    renderHome();
+    renderZukan();
+  }
+});
+
