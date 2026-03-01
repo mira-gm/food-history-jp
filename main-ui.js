@@ -152,34 +152,20 @@ function fadeOutToClearScreen() {
 // ===============================
 // クリア画面：一覧表示
 // ===============================
-function renderClearScreen(selectedEra = "縄文") {
+function renderClearScreen() {
+  const eraName = clearViewEra;   // ★ 常に現在の時代を参照
+
   const box = document.getElementById("clear-info-box");
-
   const type = document.querySelector("#clear-tabs .info-tab.active").dataset.type;
-
-  // 選択された時代（null なら全時代）
-  const eraName = selectedEra;
 
   let list = [];
 
   if (type === "料理") {
-    const filtered = eraName
-      ? recipes.filter(r => r.時代 === eraName)
-      : recipes;
-
-    list = filtered.map(r => ({
-      name: r.料理,
-      recipe: r
-    }));
+    const filtered = recipes.filter(r => r.時代 === eraName);
+    list = filtered.map(r => ({ name: r.料理, recipe: r }));
   } else {
-    const filtered = eraName
-      ? dataList.filter(d => d.分類 === type && d.時代 === eraName)
-      : dataList.filter(d => d.分類 === type);
-
-    list = filtered.map(d => ({
-      name: d.name,
-      recipe: null
-    }));
+    const filtered = dataList.filter(d => d.分類 === type && d.時代 === eraName);
+    list = filtered.map(d => ({ name: d.name, recipe: null }));
   }
 
   box.innerHTML = list.map(item => `
@@ -188,17 +174,16 @@ function renderClearScreen(selectedEra = "縄文") {
     </div>
   `).join("");
 
-  // ★ 料理クリック → ポップアップ
+  // 料理クリック → ポップアップ
   box.querySelectorAll(".zukan-item").forEach(div => {
     div.onclick = () => {
       if (type !== "料理") return;
-
       const recipe = recipes.find(r => r.料理 === div.dataset.name);
       if (recipe) showPopupForRecipe(recipe);
     };
   });
 
-  renderClearEraTabs(selectedEra);
+  renderClearEraTabs();   // ★ active の付け替えだけ行う
 }
 
 // ===============================
@@ -236,15 +221,13 @@ document.querySelectorAll("#clear-tabs .info-tab").forEach(tab => {
 document.getElementById("clear-era-tabs").onclick = (e) => {
   if (!e.target.classList.contains("era-tab")) return;
 
-  // active の付け替え
   document.querySelectorAll("#clear-era-tabs .era-tab")
     .forEach(t => t.classList.remove("active"));
   e.target.classList.add("active");
 
-  // 選択された時代名
-  const eraName = e.target.textContent;
+  clearViewEra = e.target.textContent;   // ★ 選択中の時代を保存
 
-  renderClearScreen(eraName);
+  renderClearScreen();
 };
 
 // ===============================
