@@ -245,6 +245,8 @@ function renderHome(){
   const nextBtn = document.getElementById("btn-next-era");
   nextBtn.disabled = !isEraCleared();
   nextBtn.classList.toggle("enabled", isEraCleared());
+
+  updateHomeGuide();   // ★ ガイド更新
 }
 
 

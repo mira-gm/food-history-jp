@@ -246,6 +246,37 @@ document.getElementById("btn-clear-title").onclick = () => {
   }, 1500);
 };
 
+// ===============================
+// ホーム画面ガイド（素材 → 3回だけ誘導）
+// ===============================
+let guideCount = 0;
+
+function updateHomeGuide() {
+  const guide = document.getElementById("home-guide");
+
+  const era = eraNameByIndex(currentEraIndex);
+  const eraItems = dataList.filter(d => d.時代 === era);
+  const needM = eraItems.filter(d => d.分類 === "素材").map(d => d.id);
+
+  const hasM = needM.some(id => owned.素材.has(id));
+
+  // ★ 素材がまだ1つもない → 最初のガイド
+  if (!hasM) {
+    guide.textContent = "【目標】まずは素材探索してみよう！";
+    return;
+  }
+
+  // ★ 素材を1つ以上持っている → 2段階目のガイド（3回まで）
+  if (guideCount < 3) {
+    guide.textContent = "【目標】素材探索・技術研究・道具開発のどれかを選んでみよう！";
+    guideCount++;
+    return;
+  }
+
+  // ★ 4回目以降は非表示
+  guide.textContent = "";
+}
+
 
 // ===============================
 // デバッグ：全解放モード
