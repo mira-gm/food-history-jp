@@ -198,6 +198,11 @@ body {
   background: #666;
 }
 
+/* ガイドで光らせる用 */
+.glow-guide {
+  animation: pulse-red 1.4s infinite ease-in-out;
+}
+
 /* ============================
    “ぼわっと光る”アニメーション
 ============================ */

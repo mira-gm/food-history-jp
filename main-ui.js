@@ -254,6 +254,11 @@ let guideCount = 0;
 function updateHomeGuide() {
   const guide = document.getElementById("home-guide");
 
+  // ★ まず全ボタンの光りを消す
+  document.getElementById("btn-material").classList.remove("glow-guide");
+  document.getElementById("btn-tech").classList.remove("glow-guide");
+  document.getElementById("btn-tool").classList.remove("glow-guide");
+
   const era = eraNameByIndex(currentEraIndex);
   const eraItems = dataList.filter(d => d.時代 === era);
   const needM = eraItems.filter(d => d.分類 === "素材").map(d => d.id);
@@ -263,6 +268,9 @@ function updateHomeGuide() {
   // ★ 素材がまだ1つもない → 最初のガイド
   if (!hasM) {
     guide.textContent = "【目標】まずは素材探索してみよう！";
+
+    // 素材探索ボタンだけ光らせる
+    document.getElementById("btn-material").classList.add("glow-guide");
     return;
   }
 
@@ -270,13 +278,17 @@ function updateHomeGuide() {
   if (guideCount < 3) {
     guide.textContent = "【目標】素材探索・技術研究・道具開発のどれかを選んでみよう！";
     guideCount++;
+
+    // 3つのボタンを光らせる
+    document.getElementById("btn-material").classList.add("glow-guide");
+    document.getElementById("btn-tech").classList.add("glow-guide");
+    document.getElementById("btn-tool").classList.add("glow-guide");
     return;
   }
 
-  // ★ 4回目以降は非表示
+  // ★ 4回目以降は非表示（光も消す）
   guide.textContent = "";
 }
-
 
 // ===============================
 // デバッグ：全解放モード
