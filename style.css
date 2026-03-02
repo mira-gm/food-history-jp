@@ -154,6 +154,15 @@ body {
   text-align: left;
 }
 
+/* ガイド表示（ホーム画面の目標） */
+#home-guide {
+  color: #FFD700;       /* 明るい金色 */
+  font-weight: bold;
+  text-align: center;
+  margin: 8px 0;
+  font-size: 20px;
+}
+
 .action-row {
   display: flex;
   justify-content: space-between;
