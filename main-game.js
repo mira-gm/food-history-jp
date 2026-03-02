@@ -2,6 +2,8 @@
 // 共通ユーティリティ
 // ===============================
 
+const logBox = document.getElementById("log-box");
+
 // 必要ID（素材ID・技術ID・道具ID）
 function needID(str) {
   if (!str) return [];
@@ -70,6 +72,7 @@ document.getElementById("btn-material").onclick = () => {
 
   renderHome();
   renderZukan();
+  logBox.scrollTop = 0;
 };
 
 // ===============================
@@ -95,6 +98,7 @@ document.getElementById("btn-tech").onclick = () => {
 
   renderHome();
   renderZukan();
+  logBox.scrollTop = 0;
 };
 
 // ===============================
@@ -120,6 +124,7 @@ document.getElementById("btn-tool").onclick = () => {
 
   renderHome();
   renderZukan();
+  logBox.scrollTop = 0;
 };
 
 // ===============================
