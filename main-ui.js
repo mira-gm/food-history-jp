@@ -254,10 +254,10 @@ let guideCount = 0;
 function updateHomeGuide() {
   const guide = document.getElementById("home-guide");
 
-  // ★ まず全ボタンの光りを消す
-  document.getElementById("btn-material").classList.remove("glow-guide");
-  document.getElementById("btn-tech").classList.remove("glow-guide");
-  document.getElementById("btn-tool").classList.remove("glow-guide");
+  // まず全ボタンの光りを消す
+  document.getElementById("btn-material").classList.remove("glow-green");
+  document.getElementById("btn-tech").classList.remove("glow-blue");
+  document.getElementById("btn-tool").classList.remove("glow-yellow");
 
   const era = eraNameByIndex(currentEraIndex);
   const eraItems = dataList.filter(d => d.時代 === era);
@@ -269,8 +269,8 @@ function updateHomeGuide() {
   if (!hasM) {
     guide.textContent = "【目標】まずは素材探索してみよう！";
 
-    // 素材探索ボタンだけ光らせる
-    document.getElementById("btn-material").classList.add("glow-guide");
+    // 素材探索だけ緑で光る
+    document.getElementById("btn-material").classList.add("glow-green");
     return;
   }
 
@@ -279,14 +279,14 @@ function updateHomeGuide() {
     guide.textContent = "【目標】素材探索・技術研究・道具開発のどれかを選んでみよう！";
     guideCount++;
 
-    // 3つのボタンを光らせる
-    document.getElementById("btn-material").classList.add("glow-guide");
-    document.getElementById("btn-tech").classList.add("glow-guide");
-    document.getElementById("btn-tool").classList.add("glow-guide");
+    // 3つのボタンをそれぞれの色で光らせる
+    document.getElementById("btn-material").classList.add("glow-green");
+    document.getElementById("btn-tech").classList.add("glow-blue");
+    document.getElementById("btn-tool").classList.add("glow-yellow");
     return;
   }
 
-  // ★ 4回目以降は非表示（光も消す）
+  // ★ 4回目以降は非表示
   guide.textContent = "";
 }
 

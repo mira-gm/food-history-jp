@@ -203,6 +203,21 @@ body {
   animation: pulse-red 1.4s infinite ease-in-out;
 }
 
+/* 素材探索（緑）用 */
+@keyframes pulse-green { ... }
+
+/* 技術研究（青）用 */
+@keyframes pulse-blue { ... }
+
+/* 道具開発（黄）用 */
+@keyframes pulse-yellow { ... }
+
+/* 色別の光るクラス */
+.glow-green  { animation: pulse-green 1.4s infinite ease-in-out; }
+.glow-blue   { animation: pulse-blue  1.4s infinite ease-in-out; }
+.glow-yellow { animation: pulse-yellow 1.4s infinite ease-in-out; }
+
+
 /* ============================
    “ぼわっと光る”アニメーション
 ============================ */
