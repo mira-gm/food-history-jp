@@ -310,8 +310,12 @@ function renderZukan(){
     const opened = ownedSet.has(d.id);
     const div = document.createElement("div");
 
-    div.className = "zukan-item disabled";
+    div.className = "zukan-item" + (opened ? "" : " disabled");
     div.textContent = opened ? d.name : "？？？";
+
+    if (opened) {
+      div.onclick = () => showPopupForItem(d);
+    }
 
     box.appendChild(div);
   });

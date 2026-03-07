@@ -189,6 +189,8 @@ function showPopupForRecipe(r) {
   const title = document.getElementById("popup-title");
   const detail = document.getElementById("popup-detail");
 
+  img.style.display = "block";   // ← ★ これを追加
+
   img.src = "./data/" + gazoMap[r.料理];
   title.innerHTML = coloredName(r.料理, "料理");
 
@@ -209,6 +211,27 @@ function showPopupForRecipe(r) {
 function getNameById(id) {
   const item = dataList.find(d => d.id === id);
   return item ? item.name : id;
+}
+
+// ===============================
+// 素材・技術・道具ポップアップ表示
+// ===============================
+function showPopupForItem(d) {
+  popupActive = true;
+
+  const popup = document.getElementById("popup");
+  const img = document.getElementById("popup-img");
+  const title = document.getElementById("popup-title");
+  const detail = document.getElementById("popup-detail");
+
+  // 素材・技術・道具は画像なし
+  img.style.display = "none";
+
+  title.innerHTML = coloredName(d.name, d.分類);
+
+  detail.innerHTML = d.メッセージ || "（メッセージなし）";
+
+  popup.style.display = "flex";
 }
 
 // ===============================
