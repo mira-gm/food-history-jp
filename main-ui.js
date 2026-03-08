@@ -38,6 +38,8 @@ document.addEventListener("DOMContentLoaded", () => {
 // ===============================
 document.getElementById("title-screen").onclick = async () => {
 
+  justStarted = true;
+
   // eraList が読み込まれるまで待機
   while (eraList.length === 0) {
     await new Promise(r => setTimeout(r, 50));

@@ -185,6 +185,12 @@ function showNextPopup() {
   if (popupQueue.length === 0) {
     popupActive = false;
 
+    // ★ ゲーム開始直後は時代クリアポップアップを出さない
+    if (justStarted) {
+      justStarted = false;
+      return;
+    }
+
     // ★ 時代クリアしていたらメッセージを出す
     if (isEraCleared()) {
       const era = eraNameByIndex(currentEraIndex);
