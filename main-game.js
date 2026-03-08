@@ -185,8 +185,12 @@ function showNextPopup() {
   if (popupQueue.length === 0) {
     popupActive = false;
 
-    // ★ 1秒待ってから時代クリアチェック
+    // ★ 時代クリアしていたらメッセージを出す
     if (isEraCleared()) {
+      const era = eraNameByIndex(currentEraIndex);
+      log(`${era}時代クリア！<br>この時代の料理・素材・技術・道具をすべて解放しました！`);
+
+      // ★ 1秒待ってから時代クリアポップアップ表示
       setTimeout(() => {
         showEraClearPopup();
       }, 1000);
