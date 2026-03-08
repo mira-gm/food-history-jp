@@ -74,9 +74,6 @@ document.getElementById("btn-material").onclick = () => {
   renderZukan();
   logBox.scrollTop = 0;
 
-  if (isEraCleared()) {
-    showEraClearPopup();
-  }
 };
 
 // ===============================
@@ -103,10 +100,6 @@ document.getElementById("btn-tech").onclick = () => {
   renderHome();
   renderZukan();
   logBox.scrollTop = 0;
-
-  if (isEraCleared()) {
-    showEraClearPopup();
-  }
 
 };
 
@@ -135,9 +128,6 @@ document.getElementById("btn-tool").onclick = () => {
   renderZukan();
   logBox.scrollTop = 0;
 
-  if (isEraCleared()) {
-    showEraClearPopup();
-  }
 };
 
 // ===============================
