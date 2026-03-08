@@ -196,16 +196,6 @@ function showNextPopup() {
       }, 1000);
     }
 
-//■■テスト用
-console.log("=== ERA CLEAR DEBUG ===");
-console.log("Era:", eraNameByIndex(currentEraIndex));
-console.log("素材:", needM, needM.map(x => owned.素材.has(x)));
-console.log("技術:", needT, needT.map(x => owned.技術.has(x)));
-console.log("道具:", needD, needD.map(x => owned.道具.has(x)));
-console.log("料理:", eraRecipes, eraRecipes.map(x => completed.has(x)));
-console.log("isEraCleared:", isEraCleared());
-//■■
-
     return;
   }
 
