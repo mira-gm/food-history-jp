@@ -188,9 +188,24 @@ document.getElementById("btn-cook").onclick = () => {
 // ポップアップ（キュー処理）
 // ===============================
 function showNextPopup() {
+  // すでにポップアップが出ているなら何もしない
   if (popupActive) return;
-  if (popupQueue.length === 0) return;
 
+  // ★ 料理ポップアップが全部終わった
+  if (popupQueue.length === 0) {
+    popupActive = false;
+
+    // ★ 1秒待ってから時代クリアチェック
+    if (isEraCleared()) {
+      setTimeout(() => {
+        showEraClearPopup();
+      }, 1000);
+    }
+
+    return;
+  }
+
+  // 次の料理ポップアップを表示
   popupActive = true;
   const r = popupQueue.shift();
   showPopupForRecipe(r);
