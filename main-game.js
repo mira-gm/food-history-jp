@@ -73,6 +73,10 @@ document.getElementById("btn-material").onclick = () => {
   renderHome();
   renderZukan();
   logBox.scrollTop = 0;
+
+  if (isEraCleared()) {
+    showEraClearPopup();
+  }
 };
 
 // ===============================
@@ -99,6 +103,11 @@ document.getElementById("btn-tech").onclick = () => {
   renderHome();
   renderZukan();
   logBox.scrollTop = 0;
+
+  if (isEraCleared()) {
+    showEraClearPopup();
+  }
+
 };
 
 // ===============================
@@ -125,6 +134,10 @@ document.getElementById("btn-tool").onclick = () => {
   renderHome();
   renderZukan();
   logBox.scrollTop = 0;
+
+  if (isEraCleared()) {
+    showEraClearPopup();
+  }
 };
 
 // ===============================
@@ -164,6 +177,11 @@ document.getElementById("btn-cook").onclick = () => {
   renderZukan();
 
   showNextPopup();
+
+  if (isEraCleared()) {
+    showEraClearPopup();
+  }
+
 };
 
 // ===============================
