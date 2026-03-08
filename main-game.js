@@ -73,7 +73,6 @@ document.getElementById("btn-material").onclick = () => {
   renderHome();
   renderZukan();
   logBox.scrollTop = 0;
-
 };
 
 // ===============================
@@ -100,7 +99,6 @@ document.getElementById("btn-tech").onclick = () => {
   renderHome();
   renderZukan();
   logBox.scrollTop = 0;
-
 };
 
 // ===============================
@@ -127,7 +125,6 @@ document.getElementById("btn-tool").onclick = () => {
   renderHome();
   renderZukan();
   logBox.scrollTop = 0;
-
 };
 
 // ===============================
@@ -167,45 +164,15 @@ document.getElementById("btn-cook").onclick = () => {
   renderZukan();
 
   showNextPopup();
-
-  if (isEraCleared()) {
-    showEraClearPopup();
-  }
-
 };
 
 // ===============================
 // ポップアップ（キュー処理）
 // ===============================
 function showNextPopup() {
-  // すでにポップアップが出ているなら何もしない
   if (popupActive) return;
+  if (popupQueue.length === 0) return;
 
-  // ★ 料理ポップアップが全部終わった
-  if (popupQueue.length === 0) {
-    popupActive = false;
-
-    // ★ ゲーム開始直後は時代クリアポップアップを出さない
-    if (justStarted) {
-      justStarted = false;
-      return;
-    }
-
-    // ★ 時代クリアしていたらメッセージを出す
-    if (isEraCleared()) {
-      const era = eraNameByIndex(currentEraIndex);
-      log(`${era}時代クリア！<br>この時代の料理・素材・技術・道具をすべて解放しました！`);
-
-      // ★ 1秒待ってから時代クリアポップアップ表示
-      setTimeout(() => {
-        showEraClearPopup();
-      }, 1000);
-    }
-
-    return;
-  }
-
-  // 次の料理ポップアップを表示
   popupActive = true;
   const r = popupQueue.shift();
   showPopupForRecipe(r);

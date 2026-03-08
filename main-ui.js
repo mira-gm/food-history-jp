@@ -38,8 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
 // ===============================
 document.getElementById("title-screen").onclick = async () => {
 
-  justStarted = true;
-
   // eraList が読み込まれるまで待機
   while (eraList.length === 0) {
     await new Promise(r => setTimeout(r, 50));
@@ -234,32 +232,6 @@ document.getElementById("clear-era-tabs").onclick = (e) => {
 
   renderClearScreen();
 };
-
-// ===============================
-// 時代クリアポップアップ表示
-// ===============================
-function showEraClearPopup() {
-  const era = eraList[currentEraIndex];
-
-  const popup = document.getElementById("era-clear-popup");
-  const img = document.getElementById("era-clear-img");
-  const title = document.getElementById("era-clear-title");
-
-  img.src = "./data/" + era.ポップアップ画像;
-  title.textContent = `${era.時代名}時代クリア！`;
-
-  popup.style.display = "flex";
-
-  // OKボタン
-  document.getElementById("era-clear-ok").onclick = () => {
-    popup.style.display = "none";
-  };
-
-  // 背景クリックでも閉じる
-  popup.onclick = () => {
-    popup.style.display = "none";
-  };
-}
 
 // ===============================
 // クリア画面：タイトルへ戻る（フェードアウト付き）

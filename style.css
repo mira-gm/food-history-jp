@@ -435,58 +435,6 @@ body {
 }
 
 /* ============================
-   時代クリアポップアップ
-============================ */
-#era-clear-popup {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100vh;
-  background: rgba(0,0,0,0.6);
-  justify-content: center;
-  align-items: center;
-  z-index: 2500;
-}
-
-#era-clear-content {
-  background: white;
-  padding: 20px;
-  width: 80%;
-  max-width: 350px;
-  border-radius: 10px;
-  text-align: center;
-  color: #000;
-}
-
-#era-clear-img {
-  width: 100%;
-  border-radius: 6px;
-  margin-bottom: 10px;
-}
-
-#era-clear-title {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #d97706; /* 金色寄りのオレンジ */
-}
-
-#era-clear-msg {
-  font-size: 16px;
-  margin-bottom: 20px;
-}
-
-#era-clear-ok {
-  background: #ff3333;
-  color: #fff;
-  padding: 14px 0;
-  width: 100%;
-  font-size: 20px;
-  border: none;
-  border-radius: 12px;
-}
-
-/* ============================
    ゲームクリア画面
 ============================ */
 #clear-screen {
