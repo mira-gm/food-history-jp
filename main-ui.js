@@ -177,12 +177,25 @@ function renderClearScreen() {
     </div>
   `).join("");
 
-  // 料理クリック → ポップアップ
+  // ★ 料理・素材・技術・道具すべてクリックでポップアップ表示
   box.querySelectorAll(".zukan-item").forEach(div => {
     div.onclick = () => {
-      if (type !== "料理") return;
-      const recipe = recipes.find(r => r.料理 === div.dataset.name);
-      if (recipe) showPopupForRecipe(recipe);
+
+      // ▼ 料理の場合
+      if (type === "料理") {
+        const recipe = recipes.find(r => r.料理 === div.dataset.name);
+        if (recipe) showPopupForRecipe(recipe);
+        return;
+      }
+
+      // ▼ 素材・技術・道具の場合
+      const item = dataList.find(d =>
+        d.name === div.dataset.name &&
+        d.分類 === type &&
+        d.時代 === eraName
+      );
+
+      if (item) showPopupForItem(item);
     };
   });
 
